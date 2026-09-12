@@ -11,8 +11,8 @@ import {
   Bookmark,
   ArrowUpRight,
 } from 'lucide-react';
-import { useData } from '../../context/DataContext';
-import { useAuth } from '../../context/AuthContext';
+import { useData } from '../../context/DataContext.js';
+import { useAuth } from '../../context/AuthContext.js';
 import {
   Badge,
   Button,
@@ -20,11 +20,11 @@ import {
   Card,
   CompanyLogo,
   EmptyState,
-} from '../../components/common/UI';
-import ApplicationModal from '../../components/applications/ApplicationModal';
-import { jobService } from '../../services/jobService';
-import { useAction } from '../../hooks/useAction';
-import { formatDate, safeUrl } from '../../utils/helpers';
+} from '../../components/common/UI.js';
+import ApplicationModal from '../../components/applications/ApplicationModal.js';
+import { jobService } from '../../services/jobService.js';
+import { useAction } from '../../hooks/useAction.js';
+import { formatDate, safeUrl } from '../../utils/helpers.js';
 export default function JobDetails() {
   const { id } = useParams();
   const data = useData();
@@ -33,7 +33,11 @@ export default function JobDetails() {
   const [apply, setApply] = useState(false);
   const { run } = useAction();
   const job = data.jobs.find((j) => j.id === id);
-  if (!job)
+  if (
+    !job ||
+    job.status === 'Deleted' ||
+    (job.status === 'Draft' && user?.companyId !== job.companyId)
+  )
     return (
       <div className="container public-page">
         <EmptyState

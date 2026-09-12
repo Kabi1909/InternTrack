@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Button, Input, Modal, Select, Textarea } from '../common/UI';
-import { useData } from '../../context/DataContext';
-import { interviewService } from '../../services/interviewService';
-import { useAction } from '../../hooks/useAction';
+import { Button, Input, Modal, Select, Textarea } from '../common/UI.js';
+import { useData } from '../../context/DataContext.js';
+import { interviewService } from '../../services/interviewService.js';
+import { useAction } from '../../hooks/useAction.js';
 export default function InterviewModal({ open, onClose, application }) {
   const data = useData();
   const [type, setType] = useState('Video call');

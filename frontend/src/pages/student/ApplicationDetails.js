@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
-import { useData } from '../../context/DataContext';
-import { useAuth } from '../../context/AuthContext';
+import { useData } from '../../context/DataContext.js';
+import { useAuth } from '../../context/AuthContext.js';
 import {
   Button,
   ButtonLink,
@@ -11,19 +11,20 @@ import {
   EmptyState,
   PageHeader,
   Textarea,
-} from '../../components/common/UI';
-import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge';
-import ApplicationTimeline from '../../components/applications/ApplicationTimeline';
-import CVPreview from '../../components/applications/CVPreview';
-import { applicationService } from '../../services/applicationService';
-import { useAction } from '../../hooks/useAction';
-import { formatDate } from '../../utils/helpers';
+} from '../../components/common/UI.js';
+import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge.js';
+import ApplicationTimeline from '../../components/applications/ApplicationTimeline.js';
+import CVPreview from '../../components/applications/CVPreview.js';
+import { applicationService } from '../../services/applicationService.js';
+import { useAction } from '../../hooks/useAction.js';
+import { formatDate } from '../../utils/helpers.js';
 export default function ApplicationDetails() {
   const { id } = useParams();
   const data = useData();
   const { user } = useAuth();
   const app = data.applications.find((a) => a.id === id && a.userId === user.id);
   const [notes, setNotes] = useState(app?.notes || '');
+  useEffect(() => setNotes(app?.notes || ''), [id]);
   const [confirm, setConfirm] = useState(false);
   const { loading, run } = useAction();
   if (!app)

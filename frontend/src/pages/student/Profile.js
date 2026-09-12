@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Save, CheckCircle2 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext.js';
 import {
   Avatar,
   Badge,
@@ -9,10 +9,10 @@ import {
   Input,
   PageHeader,
   SkillTags,
-} from '../../components/common/UI';
-import FileUpload from '../../components/profile/FileUpload';
-import { profileService } from '../../services/profileService';
-import { useAction } from '../../hooks/useAction';
+} from '../../components/common/UI.js';
+import FileUpload from '../../components/profile/FileUpload.js';
+import { profileService } from '../../services/profileService.js';
+import { useAction } from '../../hooks/useAction.js';
 export default function StudentProfile() {
   const { user } = useAuth();
   const [values, setValues] = useState({ ...user });

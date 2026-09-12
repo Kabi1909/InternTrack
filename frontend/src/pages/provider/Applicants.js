@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useData } from '../../context/DataContext';
-import { useAuth } from '../../context/AuthContext';
+import { useData } from '../../context/DataContext.js';
+import { useAuth } from '../../context/AuthContext.js';
 import {
   Avatar,
   Badge,
@@ -13,13 +13,13 @@ import {
   Input,
   PageHeader,
   Select,
-} from '../../components/common/UI';
-import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge';
-import InterviewModal from '../../components/applications/InterviewModal';
-import { applicationService } from '../../services/applicationService';
-import { useAction } from '../../hooks/useAction';
-import { statuses } from '../../data/mockData';
-import { formatDate } from '../../utils/helpers';
+} from '../../components/common/UI.js';
+import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge.js';
+import InterviewModal from '../../components/applications/InterviewModal.js';
+import { applicationService } from '../../services/applicationService.js';
+import { useAction } from '../../hooks/useAction.js';
+import { statuses } from '../../data/mockData.js';
+import { formatDate } from '../../utils/helpers.js';
 export default function Applicants() {
   const { id } = useParams();
   const { user } = useAuth();

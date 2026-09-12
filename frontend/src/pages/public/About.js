@@ -1,5 +1,5 @@
 import { Compass, HeartHandshake, Layers } from 'lucide-react';
-import { ButtonLink, Card } from '../../components/common/UI';
+import { ButtonLink, Card } from '../../components/common/UI.js';
 export default function About() {
   return (
     <div className="container public-page">

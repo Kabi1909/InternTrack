@@ -1,4 +1,4 @@
-import { readStore, delay, mutate, uid, notify } from './mockStore';
+import { readStore, delay, mutate, uid, notify } from './mockStore.js';
 export const applicationService = {
   list: () => delay(readStore().applications),
   apply: (values) =>
@@ -52,7 +52,12 @@ export const applicationService = {
   update: (id, changes) =>
     mutate((data) => {
       const app = data.applications.find((a) => a.id === id);
-      Object.assign(app, changes, { updatedAt: new Date().toISOString() });
+      if (!app) throw new Error('Application not found.');
+      if (changes.status === app.status) return app;
+      if (changes.status && app.status === 'Withdrawn')
+        throw new Error('A withdrawn application cannot be updated.');
+      Object.assign(app, changes);
+      if (changes.status) app.updatedAt = new Date().toISOString();
       if (changes.status) {
         app.history.push({ status: changes.status, date: app.updatedAt });
         notify(

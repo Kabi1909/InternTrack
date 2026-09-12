@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
-import { useData } from './DataContext';
-import { authService } from '../services/authService';
+import { useData } from './DataContext.js';
+import { authService } from '../services/authService.js';
 const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const data = useData();

@@ -8,9 +8,9 @@ import {
   ArrowRight,
   Sparkles,
 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { Button, Input, Modal } from '../../components/common/UI';
-import { useAction } from '../../hooks/useAction';
+import { useAuth } from '../../context/AuthContext.js';
+import { Button, Input, Modal } from '../../components/common/UI.js';
+import { useAction } from '../../hooks/useAction.js';
 export default function AuthPage({ register = false }) {
   const [params] = useSearchParams();
   const [role, setRole] = useState(
@@ -75,13 +75,13 @@ export default function AuthPage({ register = false }) {
           <Sparkles size={16} />
           YOUR POTENTIAL. YOUR POSSIBILITIES.
         </div>
-        <h1>
+        <h2>
           Every great story
           <br />
           starts with
           <br />
           <em>a first step.</em>
-        </h1>
+        </h2>
         <p>
           A thoughtful space to discover opportunities, keep moving forward, and build a
           future that feels like you.
@@ -95,7 +95,7 @@ export default function AuthPage({ register = false }) {
         <div className="eyebrow">
           {register ? 'LET’S GET YOU STARTED' : 'GOOD TO SEE YOU AGAIN'}
         </div>
-        <h2>{register ? 'Your next chapter awaits.' : 'Welcome back.'}</h2>
+        <h1>{register ? 'Your next chapter awaits.' : 'Welcome back.'}</h1>
         <p>
           {register
             ? 'Create your free account and take the first step.'

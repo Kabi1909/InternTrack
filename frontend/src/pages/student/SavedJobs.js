@@ -1,7 +1,7 @@
-import { useData } from '../../context/DataContext';
-import { useAuth } from '../../context/AuthContext';
-import { ButtonLink, EmptyState, PageHeader } from '../../components/common/UI';
-import JobCard from '../../components/jobs/JobCard';
+import { useData } from '../../context/DataContext.js';
+import { useAuth } from '../../context/AuthContext.js';
+import { ButtonLink, EmptyState, PageHeader } from '../../components/common/UI.js';
+import JobCard from '../../components/jobs/JobCard.js';
 export default function SavedJobs() {
   const data = useData();
   const { user } = useAuth();

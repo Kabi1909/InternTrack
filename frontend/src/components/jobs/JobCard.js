@@ -1,11 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowUpRight, Bookmark, MapPin, Clock3 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { useData } from '../../context/DataContext';
-import { jobService } from '../../services/jobService';
-import { useAction } from '../../hooks/useAction';
-import { Badge, CompanyLogo } from '../common/UI';
-import { formatDate } from '../../utils/helpers';
+import { useAuth } from '../../context/AuthContext.js';
+import { useData } from '../../context/DataContext.js';
+import { jobService } from '../../services/jobService.js';
+import { useAction } from '../../hooks/useAction.js';
+import { Badge, CompanyLogo } from '../common/UI.js';
+import { formatDate } from '../../utils/helpers.js';
 export default function JobCard({ job, compact = false }) {
   const { user } = useAuth();
   const data = useData();

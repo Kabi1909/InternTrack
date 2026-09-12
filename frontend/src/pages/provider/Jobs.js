@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useData } from '../../context/DataContext';
-import { useAuth } from '../../context/AuthContext';
+import { useData } from '../../context/DataContext.js';
+import { useAuth } from '../../context/AuthContext.js';
 import { Plus } from 'lucide-react';
 import {
   Button,
@@ -11,11 +11,11 @@ import {
   PageHeader,
   SearchBar,
   Select,
-} from '../../components/common/UI';
-import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge';
-import { jobService } from '../../services/jobService';
-import { useAction } from '../../hooks/useAction';
-import { formatDate } from '../../utils/helpers';
+} from '../../components/common/UI.js';
+import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge.js';
+import { jobService } from '../../services/jobService.js';
+import { useAction } from '../../hooks/useAction.js';
+import { formatDate } from '../../utils/helpers.js';
 export default function JobManagement() {
   const { user } = useAuth();
   const data = useData();
@@ -24,7 +24,7 @@ export default function JobManagement() {
   const [confirm, setConfirm] = useState(null);
   const { loading, run } = useAction();
   const jobs = data.jobs
-    .filter((j) => j.companyId === user.companyId)
+    .filter((j) => j.companyId === user.companyId && j.status !== 'Deleted')
     .map((j) => ({
       ...j,
       displayStatus:

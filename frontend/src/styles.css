@@ -1237,11 +1237,11 @@ select:focus {
   flex-direction: column;
   justify-content: center;
 }
-.auth-story h1 {
+.auth-story h2 {
   font-size: 48px;
   margin: 25px 0;
 }
-.auth-story h1 em {
+.auth-story h2 em {
   font-family: Georgia, serif;
   color: #739255;
   font-weight: 400;
@@ -1271,7 +1271,7 @@ select:focus {
   width: 100%;
   margin: auto;
 }
-.auth-form-wrap h2 {
+.auth-form-wrap h1 {
   font-size: 29px;
 }
 .auth-form-wrap > p {
@@ -2294,7 +2294,7 @@ select:focus {
   .auth-story {
     padding: 45px 30px;
   }
-  .auth-story h1 {
+  .auth-story h2 {
     font-size: 36px;
   }
   .auth-form-wrap {
@@ -2814,5 +2814,104 @@ select:focus {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
+  }
+}
+/* Final visual QA: keep controls clear of the illustration and improve readability. */
+.hero-search {
+  width: 100%;
+}
+.hero-art {
+  pointer-events: none;
+}
+.sidebar {
+  overflow-y: auto;
+}
+.company-logo {
+  object-fit: cover;
+}
+.job-location,
+.job-bottom > span,
+.company-name,
+.stat-top,
+.stat-card > small,
+.list-item p,
+.data-table th,
+.data-table td small,
+.breadcrumb,
+.notification-item p,
+.notification-item small,
+.filter-group label,
+.category-card p,
+.step p,
+.footer-links,
+.footer-top p,
+.footer-bottom,
+.banner-note,
+.strength-label,
+.calendar-legend,
+.hero-hint,
+.hero-proof {
+  color: #63735d;
+}
+.hero-copy > p,
+.section-heading p,
+.page-heading p,
+.muted {
+  color: #687564;
+}
+.sidebar-nav a,
+.sidebar-logout {
+  color: #64735c;
+}
+.dashboard-grid > *,
+.profile-layout > *,
+.detail-layout > *,
+.interview-grid > * {
+  min-width: 0;
+}
+.list-item > div {
+  min-width: 0;
+}
+.job-title,
+.list-item h3,
+.data-table strong {
+  overflow-wrap: anywhere;
+}
+.calendar-agenda {
+  display: none;
+}
+@media (max-height: 850px) {
+  .sidebar-note {
+    display: none;
+  }
+  .sidebar-bottom {
+    padding-top: 18px;
+  }
+}
+@media (max-width: 640px) {
+  .hero-search {
+    width: 100%;
+  }
+  .hero-search .btn {
+    width: 100%;
+  }
+  .calendar-toolbar {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .calendar-agenda {
+    display: block;
+    margin-top: 24px;
+  }
+  .list-item .badge {
+    white-space: normal;
+    text-align: center;
+    max-width: 115px;
+  }
+  .auth-form-wrap h1 {
+    font-size: 27px;
+  }
+  .form-actions .btn {
+    white-space: normal;
   }
 }

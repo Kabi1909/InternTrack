@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Modal, Button, Select, Textarea } from '../common/UI';
-import FileUpload from '../profile/FileUpload';
-import { useAuth } from '../../context/AuthContext';
-import { applicationService } from '../../services/applicationService';
-import { useAction } from '../../hooks/useAction';
+import { Modal, Button, Select, Textarea } from '../common/UI.js';
+import FileUpload from '../profile/FileUpload.js';
+import { useAuth } from '../../context/AuthContext.js';
+import { applicationService } from '../../services/applicationService.js';
+import { useAction } from '../../hooks/useAction.js';
 export default function ApplicationModal({ open, onClose, job, onSuccess }) {
   const { user } = useAuth();
   const [cv, setCv] = useState(null);

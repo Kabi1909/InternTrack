@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { useData } from '../../context/DataContext';
-import { Button, Card, Input, Modal, PageHeader } from '../../components/common/UI';
-import { mutate, uid } from '../../services/mockStore';
-import { useAction } from '../../hooks/useAction';
+import { useAuth } from '../../context/AuthContext.js';
+import { useData } from '../../context/DataContext.js';
+import { Button, Card, Input, Modal, PageHeader } from '../../components/common/UI.js';
+import { mutate, uid } from '../../services/mockStore.js';
+import { useAction } from '../../hooks/useAction.js';
 export default function Calendar() {
   const { user } = useAuth();
   const data = useData();
@@ -132,6 +132,27 @@ export default function Calendar() {
                 )}
             </div>
           ))}
+        </div>
+        <div className="calendar-agenda">
+          <h3>This month, at a glance</h3>
+          {events
+            .filter((event) => event.date.startsWith(dateKey(month).slice(0, 7)))
+            .sort((a, b) => a.date.localeCompare(b.date))
+            .map((event, index) => (
+              <div className="list-item" key={index}>
+                <span className="date-tile">{Number(event.date.slice(-2))}</span>
+                <div>
+                  <h3>
+                    {event.to ? (
+                      <Link to={event.to}>{event.title}</Link>
+                    ) : (
+                      <button onClick={() => setSelected(event)}>{event.title}</button>
+                    )}
+                  </h3>
+                  <p>{event.type}</p>
+                </div>
+              </div>
+            ))}
         </div>
         <div className="calendar-legend">
           <span>

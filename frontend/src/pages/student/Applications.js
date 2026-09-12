@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { useData } from '../../context/DataContext';
-import { useAuth } from '../../context/AuthContext';
+import { useData } from '../../context/DataContext.js';
+import { useAuth } from '../../context/AuthContext.js';
 import {
   ButtonLink,
   Card,
@@ -12,10 +12,10 @@ import {
   PageHeader,
   SearchBar,
   Select,
-} from '../../components/common/UI';
-import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge';
-import { statuses } from '../../data/mockData';
-import { formatDate } from '../../utils/helpers';
+} from '../../components/common/UI.js';
+import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge.js';
+import { statuses } from '../../data/mockData.js';
+import { formatDate } from '../../utils/helpers.js';
 export default function Applications() {
   const data = useData();
   const { user } = useAuth();

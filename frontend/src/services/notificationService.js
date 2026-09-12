@@ -1,4 +1,4 @@
-import { mutate } from './mockStore';
+import { mutate } from './mockStore.js';
 export const notificationService = {
   markRead: (id) =>
     mutate((d) => {

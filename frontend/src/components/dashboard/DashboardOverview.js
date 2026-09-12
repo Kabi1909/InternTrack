@@ -12,8 +12,8 @@ import {
   CheckCircle2,
   Plus,
 } from 'lucide-react';
-import { useData } from '../../context/DataContext';
-import { useAuth } from '../../context/AuthContext';
+import { useData } from '../../context/DataContext.js';
+import { useAuth } from '../../context/AuthContext.js';
 import {
   Avatar,
   ButtonLink,
@@ -22,12 +22,12 @@ import {
   EmptyState,
   PageHeader,
   SectionHeader,
-} from '../common/UI';
-import StatCard from './StatCard';
-import Analytics from './Analytics';
-import JobCard from '../jobs/JobCard';
-import ApplicationStatusBadge from '../applications/ApplicationStatusBadge';
-import { formatDate } from '../../utils/helpers';
+} from '../common/UI.js';
+import StatCard from './StatCard.js';
+import Analytics from './Analytics.js';
+import JobCard from '../jobs/JobCard.js';
+import ApplicationStatusBadge from '../applications/ApplicationStatusBadge.js';
+import { formatDate } from '../../utils/helpers.js';
 export default function DashboardOverview({ provider = false }) {
   const data = useData();
   const { user } = useAuth();
@@ -47,7 +47,11 @@ export default function DashboardOverview({ provider = false }) {
   const count = (status) => applications.filter((a) => a.status === status).length;
   const stats = provider
     ? [
-        ['Total Vacancies', jobs.length, BriefcaseBusiness],
+        [
+          'Total Vacancies',
+          jobs.filter((job) => job.status !== 'Deleted').length,
+          BriefcaseBusiness,
+        ],
         [
           'Active Vacancies',
           jobs.filter((j) => j.status === 'Active').length,

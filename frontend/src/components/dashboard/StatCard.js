@@ -1,5 +1,5 @@
 import { ArrowUpRight } from 'lucide-react';
-import { Card } from '../common/UI';
+import { Card } from '../common/UI.js';
 export default function StatCard({ label, value, icon: Icon, description }) {
   return (
     <Card className="stat-card">

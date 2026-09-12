@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SlidersHorizontal, MapPin } from 'lucide-react';
-import { useData } from '../../context/DataContext';
-import { jobService } from '../../services/jobService';
+import { useData } from '../../context/DataContext.js';
+import { jobService } from '../../services/jobService.js';
 import {
   Button,
   EmptyState,
@@ -12,9 +12,9 @@ import {
   Pagination,
   SearchBar,
   Skeleton,
-} from '../../components/common/UI';
-import FilterPanel from '../../components/jobs/FilterPanel';
-import JobCard from '../../components/jobs/JobCard';
+} from '../../components/common/UI.js';
+import FilterPanel from '../../components/jobs/FilterPanel.js';
+import JobCard from '../../components/jobs/JobCard.js';
 const empty = { type: [], mode: [], experience: '', category: '', skills: '' };
 export default function BrowseJobs() {
   const data = useData();

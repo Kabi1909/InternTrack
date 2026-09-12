@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Upload, FileText } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { Input } from '../common/UI';
+import { Input } from '../common/UI.js';
 export async function readUpload(file, kind = 'document') {
   if (!file) return null;
   const max = kind === 'image' ? 1 : 2;

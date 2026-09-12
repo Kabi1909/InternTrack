@@ -1,4 +1,4 @@
-import { initialData } from '../data/mockData';
+import { initialData } from '../data/mockData.js';
 const key = 'interntrack.data.v1';
 let memory;
 export function readStore() {
@@ -26,7 +26,7 @@ export const snapshot = () => structuredClone(readStore());
 export const delay = (value) =>
   new Promise((resolve) => setTimeout(() => resolve(structuredClone(value)), 180));
 export const uid = (prefix) => prefix + crypto.randomUUID();
-export function mutate(fn) {
+export async function mutate(fn) {
   const data = snapshot();
   const result = fn(data);
   writeStore(data);

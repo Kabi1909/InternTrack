@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Button, Modal } from '../common/UI';
-import { downloadText } from '../../utils/helpers';
+import { Button, Modal } from '../common/UI.js';
+import { downloadText } from '../../utils/helpers.js';
 export default function CVPreview({ application, candidate }) {
   const [open, setOpen] = useState(false);
   return (

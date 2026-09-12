@@ -24,7 +24,7 @@ import {
   CalendarDays,
   GraduationCap,
 } from 'lucide-react';
-import { useData } from '../../context/DataContext';
+import { useData } from '../../context/DataContext.js';
 import {
   Avatar,
   Badge,
@@ -32,9 +32,9 @@ import {
   ButtonLink,
   CompanyLogo,
   SectionHeader,
-} from '../../components/common/UI';
-import JobCard from '../../components/jobs/JobCard';
-import { categories } from '../../data/mockData';
+} from '../../components/common/UI.js';
+import JobCard from '../../components/jobs/JobCard.js';
+import { categories } from '../../data/mockData.js';
 const categoryIcons = [
   Code2,
   PenTool,

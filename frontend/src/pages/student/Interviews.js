@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CalendarDays, Clock3, Video, MapPin, Download } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { useData } from '../../context/DataContext';
+import { useAuth } from '../../context/AuthContext.js';
+import { useData } from '../../context/DataContext.js';
 import {
   Badge,
   Button,
@@ -10,9 +10,9 @@ import {
   CompanyLogo,
   EmptyState,
   PageHeader,
-} from '../../components/common/UI';
-import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge';
-import { calendarDownload, formatDate, safeUrl } from '../../utils/helpers';
+} from '../../components/common/UI.js';
+import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge.js';
+import { calendarDownload, formatDate, safeUrl } from '../../utils/helpers.js';
 export default function Interviews() {
   const { user } = useAuth();
   const data = useData();

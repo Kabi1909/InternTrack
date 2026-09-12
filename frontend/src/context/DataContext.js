@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { readStore } from '../services/mockStore';
+import { readStore } from '../services/mockStore.js';
 const DataContext = createContext();
 export function DataProvider({ children }) {
   const [data, setData] = useState(() => structuredClone(readStore()));

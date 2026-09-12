@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight, Save } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { useData } from '../../context/DataContext';
+import { useAuth } from '../../context/AuthContext.js';
+import { useData } from '../../context/DataContext.js';
 import {
   Avatar,
   Badge,
@@ -14,13 +14,13 @@ import {
   PageHeader,
   Select,
   Textarea,
-} from '../../components/common/UI';
-import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge';
-import CVPreview from '../../components/applications/CVPreview';
-import InterviewModal from '../../components/applications/InterviewModal';
-import { applicationService } from '../../services/applicationService';
-import { useAction } from '../../hooks/useAction';
-import { formatDate, safeUrl } from '../../utils/helpers';
+} from '../../components/common/UI.js';
+import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge.js';
+import CVPreview from '../../components/applications/CVPreview.js';
+import InterviewModal from '../../components/applications/InterviewModal.js';
+import { applicationService } from '../../services/applicationService.js';
+import { useAction } from '../../hooks/useAction.js';
+import { formatDate, safeUrl } from '../../utils/helpers.js';
 export default function CandidateDetails() {
   const { id } = useParams();
   const { user } = useAuth();
@@ -32,6 +32,8 @@ export default function CandidateDetails() {
   );
   const [notes, setNotes] = useState(app?.privateNotes || '');
   const [status, setStatus] = useState(app?.status || 'Applied');
+  useEffect(() => setStatus(app?.status || 'Applied'), [app?.status]);
+  useEffect(() => setNotes(app?.privateNotes || ''), [id]);
   const [schedule, setSchedule] = useState(false);
   const [reject, setReject] = useState(false);
   const { loading, run } = useAction();

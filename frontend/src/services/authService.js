@@ -1,4 +1,4 @@
-import { readStore, mutate, delay, uid } from './mockStore';
+import { readStore, mutate, delay, uid } from './mockStore.js';
 export const authService = {
   login: async ({ email, password }) => {
     const user = readStore().users.find(

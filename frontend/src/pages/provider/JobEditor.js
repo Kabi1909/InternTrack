@@ -1,15 +1,17 @@
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { useData } from '../../context/DataContext';
-import { useAuth } from '../../context/AuthContext';
-import { ButtonLink, Card, EmptyState, PageHeader } from '../../components/common/UI';
-import JobForm from '../../components/jobs/JobForm';
+import { useData } from '../../context/DataContext.js';
+import { useAuth } from '../../context/AuthContext.js';
+import { ButtonLink, Card, EmptyState, PageHeader } from '../../components/common/UI.js';
+import JobForm from '../../components/jobs/JobForm.js';
 export default function JobEditor() {
   const { id } = useParams();
   const { user } = useAuth();
   const data = useData();
   const company = data.companies.find((c) => c.id === user.companyId);
-  const job = data.jobs.find((j) => j.id === id && j.companyId === user.companyId);
+  const job = data.jobs.find(
+    (j) => j.id === id && j.companyId === user.companyId && j.status !== 'Deleted',
+  );
   if (id && !job)
     return (
       <EmptyState

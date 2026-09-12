@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { CheckCheck } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { useData } from '../../context/DataContext';
-import { Button, Card, EmptyState, PageHeader } from '../../components/common/UI';
-import NotificationItem from '../../components/notifications/NotificationItem';
-import { notificationService } from '../../services/notificationService';
-import { useAction } from '../../hooks/useAction';
+import { useAuth } from '../../context/AuthContext.js';
+import { useData } from '../../context/DataContext.js';
+import { Button, Card, EmptyState, PageHeader } from '../../components/common/UI.js';
+import NotificationItem from '../../components/notifications/NotificationItem.js';
+import { notificationService } from '../../services/notificationService.js';
+import { useAction } from '../../hooks/useAction.js';
 export default function Notifications() {
   const { user } = useAuth();
   const data = useData();

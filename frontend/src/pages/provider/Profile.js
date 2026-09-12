@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Save, Building2 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { useData } from '../../context/DataContext';
+import { useAuth } from '../../context/AuthContext.js';
+import { useData } from '../../context/DataContext.js';
 import {
   Avatar,
   Button,
@@ -10,10 +10,10 @@ import {
   Input,
   PageHeader,
   Textarea,
-} from '../../components/common/UI';
-import FileUpload from '../../components/profile/FileUpload';
-import { profileService } from '../../services/profileService';
-import { useAction } from '../../hooks/useAction';
+} from '../../components/common/UI.js';
+import FileUpload from '../../components/profile/FileUpload.js';
+import { profileService } from '../../services/profileService.js';
+import { useAction } from '../../hooks/useAction.js';
 export default function CompanyProfile() {
   const { user } = useAuth();
   const data = useData();

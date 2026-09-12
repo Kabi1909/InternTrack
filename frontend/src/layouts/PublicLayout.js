@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { ArrowUpRight, Menu, Route, X } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { ButtonLink } from '../components/common/UI';
+import { useAuth } from '../context/AuthContext.js';
+import { ButtonLink } from '../components/common/UI.js';
 export function Logo() {
   return (
     <Link to="/" className="logo" aria-label="InternTrack home">

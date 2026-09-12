@@ -11,7 +11,7 @@ import {
   SearchX,
   X,
 } from 'lucide-react';
-import { initials } from '../../utils/helpers';
+import { initials } from '../../utils/helpers.js';
 export function Button({
   children,
   variant = 'primary',
@@ -102,6 +102,14 @@ export function Avatar({ name, src, size = 'normal' }) {
   );
 }
 export function CompanyLogo({ company, size = '' }) {
+  if (company?.picture)
+    return (
+      <img
+        className={`company-logo ${size}`}
+        src={company.picture}
+        alt={`${company.name} logo`}
+      />
+    );
   return (
     <span
       className={`company-logo ${size}`}
@@ -189,6 +197,8 @@ export function SectionHeader({
 }
 export function Modal({ open, onClose, title, children }) {
   const ref = useRef();
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
   const titleId = useId();
   useEffect(() => {
     if (!open) return;
@@ -197,7 +207,7 @@ export function Modal({ open, onClose, title, children }) {
     document.body.style.overflow = 'hidden';
     ref.current?.focus();
     const key = (e) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') onCloseRef.current();
       if (e.key === 'Tab') {
         const els = ref.current.querySelectorAll(
           'button:not(:disabled),a[href],input:not(:disabled),select,textarea,[tabindex="0"]',
@@ -222,7 +232,7 @@ export function Modal({ open, onClose, title, children }) {
       document.removeEventListener('keydown', key);
       prev?.focus();
     };
-  }, [open, onClose]);
+  }, [open]);
   if (!open) return null;
   return (
     <div

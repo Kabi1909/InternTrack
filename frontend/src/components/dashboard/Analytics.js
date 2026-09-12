@@ -12,7 +12,7 @@ import {
   BarChart,
   Bar,
 } from 'recharts';
-import { Card } from '../common/UI';
+import { Card } from '../common/UI.js';
 const colors = [
   '#7c9e60',
   '#bfd39d',

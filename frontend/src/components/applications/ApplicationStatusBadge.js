@@ -1,4 +1,4 @@
-import { Badge } from '../common/UI';
+import { Badge } from '../common/UI.js';
 export default function ApplicationStatusBadge({ status }) {
   const tone = {
     Applied: 'blue',

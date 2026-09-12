@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -17,10 +17,11 @@ import {
   X,
   Sparkles,
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { useData } from '../context/DataContext';
-import { Avatar, Dropdown } from '../components/common/UI';
-import { Logo } from './PublicLayout';
+import { useAuth } from '../context/AuthContext.js';
+import { useData } from '../context/DataContext.js';
+import { Avatar, Dropdown } from '../components/common/UI.js';
+import { Logo } from './PublicLayout.js';
+import { useMediaQuery } from '../hooks/useMediaQuery.js';
 const studentLinks = [
   ['Dashboard', 'dashboard', LayoutDashboard],
   ['Browse Jobs', '/jobs', BriefcaseBusiness],
@@ -44,6 +45,35 @@ export default function DashboardLayout({ role }) {
   const { user, logout } = useAuth();
   const data = useData();
   const [open, setOpen] = useState(false);
+  const isMobile = useMediaQuery('(max-width: 850px)');
+  const sidebarRef = useRef(null);
+  const triggerRef = useRef(null);
+  useEffect(() => {
+    if (!open || !isMobile) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    sidebarRef.current?.querySelector('button')?.focus();
+    const trap = (event) => {
+      if (event.key !== 'Tab') return;
+      const items = sidebarRef.current.querySelectorAll('a[href], button:not(:disabled)');
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      }
+      if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', trap);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', trap);
+      triggerRef.current?.focus();
+    };
+  }, [open, isMobile]);
   const location = useLocation();
   const navigate = useNavigate();
   const links = role === 'student' ? studentLinks : providerLinks;
@@ -76,6 +106,8 @@ export default function DashboardLayout({ role }) {
         />
       )}
       <aside
+        ref={sidebarRef}
+        inert={isMobile && !open}
         className={`sidebar ${open ? 'open' : ''}`}
         aria-label={`${role} navigation`}
       >
@@ -132,6 +164,7 @@ export default function DashboardLayout({ role }) {
         <header className="dashboard-topbar">
           <div className="inline-row">
             <button
+              ref={triggerRef}
               className="icon-btn mobile-toggle"
               aria-expanded={open}
               aria-label="Open sidebar"
