@@ -1,4 +1,4 @@
-import { mutate } from "./mockStore";
+import { mutate } from './mockStore';
 export const notificationService = {
   markRead: (id) =>
     mutate((d) => {
@@ -6,8 +6,6 @@ export const notificationService = {
     }),
   markAll: (userId) =>
     mutate((d) => {
-      d.notifications
-        .filter((n) => n.userId === userId)
-        .forEach((n) => (n.read = true));
+      d.notifications.filter((n) => n.userId === userId).forEach((n) => (n.read = true));
     }),
 };

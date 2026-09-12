@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
   MapPin,
@@ -10,9 +10,9 @@ import {
   GraduationCap,
   Bookmark,
   ArrowUpRight,
-} from "lucide-react";
-import { useData } from "../../context/DataContext";
-import { useAuth } from "../../context/AuthContext";
+} from 'lucide-react';
+import { useData } from '../../context/DataContext';
+import { useAuth } from '../../context/AuthContext';
 import {
   Badge,
   Button,
@@ -20,11 +20,11 @@ import {
   Card,
   CompanyLogo,
   EmptyState,
-} from "../../components/common/UI";
-import ApplicationModal from "../../components/applications/ApplicationModal";
-import { jobService } from "../../services/jobService";
-import { useAction } from "../../hooks/useAction";
-import { formatDate, safeUrl } from "../../utils/helpers";
+} from '../../components/common/UI';
+import ApplicationModal from '../../components/applications/ApplicationModal';
+import { jobService } from '../../services/jobService';
+import { useAction } from '../../hooks/useAction';
+import { formatDate, safeUrl } from '../../utils/helpers';
 export default function JobDetails() {
   const { id } = useParams();
   const data = useData();
@@ -46,18 +46,17 @@ export default function JobDetails() {
   const company = data.companies.find((c) => c.id === job.companyId);
   const saved = (data.saved[user?.id] || []).includes(id);
   const existing = data.applications.find(
-    (a) => a.userId === user?.id && a.jobId === id && a.status !== "Withdrawn",
+    (a) => a.userId === user?.id && a.jobId === id && a.status !== 'Withdrawn',
   );
   const closed =
-    job.status !== "Active" ||
-    job.deadline < new Date().toISOString().slice(0, 10);
+    job.status !== 'Active' || job.deadline < new Date().toISOString().slice(0, 10);
   const save = () =>
     user
       ? run(
           () => jobService.toggleSaved(user.id, id),
-          saved ? "Removed from saved jobs" : "Opportunity saved",
+          saved ? 'Removed from saved jobs' : 'Opportunity saved',
         )
-      : navigate("/login", { state: { from: `/jobs/${id}` } });
+      : navigate('/login', { state: { from: `/jobs/${id}` } });
   return (
     <div className="container public-page">
       <Link className="back-link" to="/jobs">
@@ -94,14 +93,14 @@ export default function JobDetails() {
               <p>{job.description}</p>
             </section>
             {[
-              ["What you’ll do", job.responsibilities],
-              ["What you’ll bring", job.qualifications],
+              ['What you’ll do', job.responsibilities],
+              ['What you’ll bring', job.qualifications],
             ].map(([title, text]) => (
               <section className="detail-section" key={title}>
                 <h2>{title}</h2>
                 <ul>
                   {text
-                    ?.split("\n")
+                    ?.split('\n')
                     .filter(Boolean)
                     .map((line) => (
                       <li key={line}>{line}</li>
@@ -143,12 +142,12 @@ export default function JobDetails() {
           <h3>Your next chapter, at a glance</h3>
           <div className="facts">
             {[
-              [Wallet, "Salary / allowance", job.salary || "Not specified"],
-              [BriefcaseBusiness, "Employment", job.type],
-              [MapPin, "Work arrangement", job.mode],
-              [Clock3, "Apply by", formatDate(job.deadline)],
-              [Users, "Open positions", job.positions],
-              [GraduationCap, "Experience", job.experience],
+              [Wallet, 'Salary / allowance', job.salary || 'Not specified'],
+              [BriefcaseBusiness, 'Employment', job.type],
+              [MapPin, 'Work arrangement', job.mode],
+              [Clock3, 'Apply by', formatDate(job.deadline)],
+              [Users, 'Open positions', job.positions],
+              [GraduationCap, 'Experience', job.experience],
             ].map(([Icon, label, value]) => (
               <div key={label}>
                 <Icon size={19} color="#8b9e79" />
@@ -159,14 +158,14 @@ export default function JobDetails() {
               </div>
             ))}
           </div>
-          {user?.role === "provider" ? (
+          {user?.role === 'provider' ? (
             <ButtonLink
               className="full-width"
               variant="secondary"
               to={
                 user.companyId === job.companyId
                   ? `/provider/jobs/${id}/edit`
-                  : "/provider/jobs"
+                  : '/provider/jobs'
               }
             >
               Manage your vacancies
@@ -187,10 +186,10 @@ export default function JobDetails() {
                   onClick={() =>
                     user
                       ? setApply(true)
-                      : navigate("/login", { state: { from: `/jobs/${id}` } })
+                      : navigate('/login', { state: { from: `/jobs/${id}` } })
                   }
                 >
-                  {closed ? "Applications closed" : "Apply now"}
+                  {closed ? 'Applications closed' : 'Apply now'}
                   <ArrowUpRight size={16} />
                 </Button>
               )}
@@ -200,22 +199,16 @@ export default function JobDetails() {
                 variant="secondary"
                 onClick={save}
               >
-                <Bookmark size={16} fill={saved ? "currentColor" : "none"} />
-                {saved ? "Saved opportunity" : "Save for later"}
+                <Bookmark size={16} fill={saved ? 'currentColor' : 'none'} />
+                {saved ? 'Saved opportunity' : 'Save for later'}
               </Button>
             </>
           )}
-          <p className="banner-note">
-            Illustrative opportunity · Frontend demo
-          </p>
+          <p className="banner-note">Illustrative opportunity · Frontend demo</p>
         </Card>
       </div>
-      {user?.role === "student" && (
-        <ApplicationModal
-          open={apply}
-          onClose={() => setApply(false)}
-          job={job}
-        />
+      {user?.role === 'student' && (
+        <ApplicationModal open={apply} onClose={() => setApply(false)} job={job} />
       )}
     </div>
   );

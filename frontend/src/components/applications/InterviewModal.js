@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { Button, Input, Modal, Select, Textarea } from "../common/UI";
-import { useData } from "../../context/DataContext";
-import { interviewService } from "../../services/interviewService";
-import { useAction } from "../../hooks/useAction";
+import { useState } from 'react';
+import { Button, Input, Modal, Select, Textarea } from '../common/UI';
+import { useData } from '../../context/DataContext';
+import { interviewService } from '../../services/interviewService';
+import { useAction } from '../../hooks/useAction';
 export default function InterviewModal({ open, onClose, application }) {
   const data = useData();
-  const [type, setType] = useState("Video call");
-  const [error, setError] = useState("");
+  const [type, setType] = useState('Video call');
+  const [error, setError] = useState('');
   const { loading, run } = useAction();
   if (!application) return null;
   const candidate = data.users.find((u) => u.id === application.userId);
@@ -14,8 +14,8 @@ export default function InterviewModal({ open, onClose, application }) {
   const submit = async (e) => {
     e.preventDefault();
     const values = Object.fromEntries(new FormData(e.currentTarget));
-    if (new Date(values.date + "T" + values.time) <= new Date()) {
-      setError("Choose a date and time in the future.");
+    if (new Date(values.date + 'T' + values.time) <= new Date()) {
+      setError('Choose a date and time in the future.');
       return;
     }
     const result = await run(
@@ -25,7 +25,7 @@ export default function InterviewModal({ open, onClose, application }) {
           type,
           applicationId: application.id,
         }),
-      "Interview scheduled. The candidate has been notified.",
+      'Interview scheduled. The candidate has been notified.',
     );
     if (result.ok) onClose();
   };
@@ -45,12 +45,7 @@ export default function InterviewModal({ open, onClose, application }) {
             min={new Date().toISOString().slice(0, 10)}
             required
           />
-          <Input
-            label="Time (your local timezone)"
-            name="time"
-            type="time"
-            required
-          />
+          <Input label="Time (your local timezone)" name="time" type="time" required />
         </div>
         <Select
           label="Interview type"
@@ -61,7 +56,7 @@ export default function InterviewModal({ open, onClose, application }) {
           <option>In person</option>
           <option>Phone call</option>
         </Select>
-        {type === "Video call" && (
+        {type === 'Video call' && (
           <Input
             label="Meeting link"
             name="link"
@@ -70,7 +65,7 @@ export default function InterviewModal({ open, onClose, application }) {
             required
           />
         )}
-        {type === "In person" && (
+        {type === 'In person' && (
           <Input
             label="Physical location"
             name="location"
@@ -78,7 +73,7 @@ export default function InterviewModal({ open, onClose, application }) {
             required
           />
         )}
-        {type === "Phone call" && (
+        {type === 'Phone call' && (
           <Input
             label="Phone number"
             name="location"

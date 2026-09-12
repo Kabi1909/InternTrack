@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -23,8 +23,8 @@ import {
   Users,
   CalendarDays,
   GraduationCap,
-} from "lucide-react";
-import { useData } from "../../context/DataContext";
+} from 'lucide-react';
+import { useData } from '../../context/DataContext';
 import {
   Avatar,
   Badge,
@@ -32,9 +32,9 @@ import {
   ButtonLink,
   CompanyLogo,
   SectionHeader,
-} from "../../components/common/UI";
-import JobCard from "../../components/jobs/JobCard";
-import { categories } from "../../data/mockData";
+} from '../../components/common/UI';
+import JobCard from '../../components/jobs/JobCard';
+import { categories } from '../../data/mockData';
 const categoryIcons = [
   Code2,
   PenTool,
@@ -47,18 +47,18 @@ const categoryIcons = [
 ];
 const workflows = {
   student: [
-    ["Create your profile", "Let your potential do the talking.", UserRound],
-    ["Find your fit", "Discover work that feels like you.", Search],
-    ["Make your move", "Apply with confidence.", Send],
-    ["Track every step", "Stay in the loop, effortlessly.", TrendingUp],
-    ["Meet your future", "Show up ready for what’s next.", Video],
+    ['Create your profile', 'Let your potential do the talking.', UserRound],
+    ['Find your fit', 'Discover work that feels like you.', Search],
+    ['Make your move', 'Apply with confidence.', Send],
+    ['Track every step', 'Stay in the loop, effortlessly.', TrendingUp],
+    ['Meet your future', 'Show up ready for what’s next.', Video],
   ],
   provider: [
-    ["Introduce your team", "Build a company profile.", Building2],
-    ["Share an opportunity", "Reach tomorrow’s talent.", BriefcaseBusiness],
-    ["Discover potential", "Review promising candidates.", Users],
-    ["Start a conversation", "Schedule interviews in one place.", CalendarDays],
-    ["Welcome your next hire", "Build something great together.", Check],
+    ['Introduce your team', 'Build a company profile.', Building2],
+    ['Share an opportunity', 'Reach tomorrow’s talent.', BriefcaseBusiness],
+    ['Discover potential', 'Review promising candidates.', Users],
+    ['Start a conversation', 'Schedule interviews in one place.', CalendarDays],
+    ['Welcome your next hire', 'Build something great together.', Check],
   ],
 };
 function HeroArtwork() {
@@ -135,11 +135,11 @@ function HeroArtwork() {
 }
 export default function Home() {
   const data = useData();
-  const [workflow, setWorkflow] = useState("student");
-  const [query, setQuery] = useState("");
-  const [location, setLocation] = useState("");
+  const [workflow, setWorkflow] = useState('student');
+  const [query, setQuery] = useState('');
+  const [location, setLocation] = useState('');
   const navigate = useNavigate();
-  const active = data.jobs.filter((j) => j.status === "Active");
+  const active = data.jobs.filter((j) => j.status === 'Active');
   const search = (e) => {
     e.preventDefault();
     navigate(`/jobs?${new URLSearchParams({ q: query, location })}`);
@@ -161,8 +161,8 @@ export default function Home() {
               <em>right opportunity.</em>
             </h1>
             <p>
-              Discover internships and early-career jobs. Keep every
-              application, interview, and possibility in one place.
+              Discover internships and early-career jobs. Keep every application,
+              interview, and possibility in one place.
             </p>
             <form className="hero-search" onSubmit={search}>
               <label>
@@ -194,14 +194,11 @@ export default function Home() {
             </p>
             <div className="hero-proof">
               <div className="avatar-stack">
-                {[
-                  "Alex Morgan",
-                  "Sam Fernando",
-                  "Priya Perera",
-                  "Jamie Taylor",
-                ].map((n) => (
-                  <Avatar key={n} name={n} />
-                ))}
+                {['Alex Morgan', 'Sam Fernando', 'Priya Perera', 'Jamie Taylor'].map(
+                  (n) => (
+                    <Avatar key={n} name={n} />
+                  ),
+                )}
               </div>
               <span>
                 A fresh start for <strong>ambitious people.</strong>
@@ -223,9 +220,7 @@ export default function Home() {
       </section>
       <section className="trusted">
         <div className="container">
-          <p>
-            Explore demo opportunities inspired by teams that build what’s next
-          </p>
+          <p>Explore demo opportunities inspired by teams that build what’s next</p>
           <div className="company-strip">
             <span>◒ Linear</span>
             <span>▣ Notion</span>
@@ -247,7 +242,7 @@ export default function Home() {
           />
           <div className="job-grid">
             {active
-              .filter((j) => j.type === "Internship")
+              .filter((j) => j.type === 'Internship')
               .slice(0, 3)
               .map((job) => (
                 <JobCard key={job.id} job={job} />
@@ -267,9 +262,7 @@ export default function Home() {
           <div className="categories">
             {categories.map((category, i) => {
               const Icon = categoryIcons[i];
-              const count = active.filter(
-                (j) => j.category === category,
-              ).length;
+              const count = active.filter((j) => j.category === category).length;
               return (
                 <Link
                   className="category-card"
@@ -282,7 +275,7 @@ export default function Home() {
                   <div>
                     <h3>{category}</h3>
                     <p>
-                      {count} {count === 1 ? "opportunity" : "opportunities"}
+                      {count} {count === 1 ? 'opportunity' : 'opportunities'}
                     </p>
                   </div>
                   <ArrowUpRight size={14} />
@@ -300,16 +293,16 @@ export default function Home() {
             <p>From your first hello to your next big yes. We’re with you.</p>
             <div className="segmented" aria-label="Choose workflow">
               <button
-                className={workflow === "student" ? "active" : ""}
-                aria-pressed={workflow === "student"}
-                onClick={() => setWorkflow("student")}
+                className={workflow === 'student' ? 'active' : ''}
+                aria-pressed={workflow === 'student'}
+                onClick={() => setWorkflow('student')}
               >
                 For students
               </button>
               <button
-                className={workflow === "provider" ? "active" : ""}
-                aria-pressed={workflow === "provider"}
-                onClick={() => setWorkflow("provider")}
+                className={workflow === 'provider' ? 'active' : ''}
+                aria-pressed={workflow === 'provider'}
+                onClick={() => setWorkflow('provider')}
               >
                 For employers
               </button>
@@ -352,35 +345,35 @@ export default function Home() {
         <div className="container benefits-grid">
           {[
             {
-              role: "student",
-              label: "FOR STUDENTS & GRADUATES",
-              title: "Less juggling. More growing.",
+              role: 'student',
+              label: 'FOR STUDENTS & GRADUATES',
+              title: 'Less juggling. More growing.',
               description:
-                "Give your ambitions a home, and your job search a little breathing room.",
+                'Give your ambitions a home, and your job search a little breathing room.',
               items: [
-                "Application tracking",
-                "Personalized discovery",
-                "Interview reminders",
-                "Saved opportunities",
-                "Career analytics",
+                'Application tracking',
+                'Personalized discovery',
+                'Interview reminders',
+                'Saved opportunities',
+                'Career analytics',
               ],
-              cta: "Start your journey",
+              cta: 'Start your journey',
               Icon: GraduationCap,
             },
             {
-              role: "provider",
-              label: "FOR FORWARD-THINKING TEAMS",
-              title: "Great talent. A clearer path.",
+              role: 'provider',
+              label: 'FOR FORWARD-THINKING TEAMS',
+              title: 'Great talent. A clearer path.',
               description:
-                "Meet the next generation of talent and make every hiring moment count.",
+                'Meet the next generation of talent and make every hiring moment count.',
               items: [
-                "Vacancy management",
-                "Candidate screening",
-                "Application pipeline",
-                "Interview scheduling",
-                "Recruitment analytics",
+                'Vacancy management',
+                'Candidate screening',
+                'Application pipeline',
+                'Interview scheduling',
+                'Recruitment analytics',
               ],
-              cta: "Find your next great hire",
+              cta: 'Find your next great hire',
               Icon: Building2,
             },
           ].map(({ role, label, title, description, items, cta, Icon }) => (
@@ -411,7 +404,7 @@ export default function Home() {
         <div className="container">
           <div className="cta-panel">
             <div>
-              <div className="eyebrow" style={{ color: "#b4cf91" }}>
+              <div className="eyebrow" style={{ color: '#b4cf91' }}>
                 THE NEXT CHAPTER IS YOURS
               </div>
               <h2>
@@ -419,9 +412,7 @@ export default function Home() {
                 <br />
                 with a first step.
               </h2>
-              <p>
-                Find your people. Find your purpose. Find your next opportunity.
-              </p>
+              <p>Find your people. Find your purpose. Find your next opportunity.</p>
             </div>
             <div className="cta-actions">
               <ButtonLink variant="lime" to="/register">

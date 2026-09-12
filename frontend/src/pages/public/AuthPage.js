@@ -1,10 +1,5 @@
-import { useState } from "react";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { useState } from 'react';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Eye,
   EyeOff,
@@ -12,19 +7,19 @@ import {
   Building2,
   ArrowRight,
   Sparkles,
-} from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import { Button, Input, Modal } from "../../components/common/UI";
-import { useAction } from "../../hooks/useAction";
+} from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { Button, Input, Modal } from '../../components/common/UI';
+import { useAction } from '../../hooks/useAction';
 export default function AuthPage({ register = false }) {
   const [params] = useSearchParams();
   const [role, setRole] = useState(
-    params.get("role") === "provider" ? "provider" : "student",
+    params.get('role') === 'provider' ? 'provider' : 'student',
   );
   const [show, setShow] = useState(false);
   const [forgot, setForgot] = useState(false);
-  const [error, setError] = useState("");
-  const [password, setPassword] = useState("");
+  const [error, setError] = useState('');
+  const [password, setPassword] = useState('');
   const auth = useAuth();
   const { loading, run } = useAction();
   const navigate = useNavigate();
@@ -32,17 +27,17 @@ export default function AuthPage({ register = false }) {
   const destination = (user) => {
     const from = location.state?.from;
     return from &&
-      ((!from.startsWith("/student") && !from.startsWith("/provider")) ||
-        from.startsWith("/" + user.role))
+      ((!from.startsWith('/student') && !from.startsWith('/provider')) ||
+        from.startsWith('/' + user.role))
       ? from
       : `/${user.role}/dashboard`;
   };
   const submit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
     const values = Object.fromEntries(new FormData(e.currentTarget));
     if (register && values.password !== values.confirmPassword) {
-      setError("Passwords don’t match. Please try again.");
+      setError('Passwords don’t match. Please try again.');
       return;
     }
     if (
@@ -51,25 +46,20 @@ export default function AuthPage({ register = false }) {
         !/[0-9]/.test(values.password) ||
         values.password.length < 8)
     ) {
-      setError(
-        "Use at least 8 characters, one uppercase letter, and one number.",
-      );
+      setError('Use at least 8 characters, one uppercase letter, and one number.');
       return;
     }
     const result = await run(
       () =>
         register
           ? auth.register({ ...values, role })
-          : auth.login({ ...values, remember: values.remember === "on" }),
-      register ? "Welcome to your next chapter!" : "Welcome back!",
+          : auth.login({ ...values, remember: values.remember === 'on' }),
+      register ? 'Welcome to your next chapter!' : 'Welcome back!',
     );
     if (result.ok) navigate(destination(result.result), { replace: true });
   };
   const demo = async (role) => {
-    const result = await run(
-      () => auth.demo(role),
-      "Your demo workspace is ready",
-    );
+    const result = await run(() => auth.demo(role), 'Your demo workspace is ready');
     if (result.ok) navigate(destination(result.result));
   };
   const strength = [
@@ -93,8 +83,8 @@ export default function AuthPage({ register = false }) {
           <em>a first step.</em>
         </h1>
         <p>
-          A thoughtful space to discover opportunities, keep moving forward, and
-          build a future that feels like you.
+          A thoughtful space to discover opportunities, keep moving forward, and build a
+          future that feels like you.
         </p>
         <div className="auth-quote">
           “A little clarity can turn a world of possibilities into your next big
@@ -103,28 +93,28 @@ export default function AuthPage({ register = false }) {
       </aside>
       <div className="auth-form-wrap">
         <div className="eyebrow">
-          {register ? "LET’S GET YOU STARTED" : "GOOD TO SEE YOU AGAIN"}
+          {register ? 'LET’S GET YOU STARTED' : 'GOOD TO SEE YOU AGAIN'}
         </div>
-        <h2>{register ? "Your next chapter awaits." : "Welcome back."}</h2>
+        <h2>{register ? 'Your next chapter awaits.' : 'Welcome back.'}</h2>
         <p>
           {register
-            ? "Create your free account and take the first step."
-            : "Pick up where you left off. Your future is waiting."}
+            ? 'Create your free account and take the first step.'
+            : 'Pick up where you left off. Your future is waiting.'}
         </p>
         {register && (
           <div className="role-picker">
             <button
-              className={role === "student" ? "active" : ""}
-              aria-pressed={role === "student"}
-              onClick={() => setRole("student")}
+              className={role === 'student' ? 'active' : ''}
+              aria-pressed={role === 'student'}
+              onClick={() => setRole('student')}
             >
               <GraduationCap size={20} />
               Student / Graduate
             </button>
             <button
-              className={role === "provider" ? "active" : ""}
-              aria-pressed={role === "provider"}
-              onClick={() => setRole("provider")}
+              className={role === 'provider' ? 'active' : ''}
+              aria-pressed={role === 'provider'}
+              onClick={() => setRole('provider')}
             >
               <Building2 size={20} />
               Job Provider
@@ -153,11 +143,9 @@ export default function AuthPage({ register = false }) {
             <Input
               label="Password"
               name="password"
-              autoComplete={register ? "new-password" : "current-password"}
-              type={show ? "text" : "password"}
-              placeholder={
-                register ? "At least 8 characters" : "Enter your password"
-              }
+              autoComplete={register ? 'new-password' : 'current-password'}
+              type={show ? 'text' : 'password'}
+              placeholder={register ? 'At least 8 characters' : 'Enter your password'}
               minLength={register ? 8 : 1}
               required
               value={password}
@@ -165,7 +153,7 @@ export default function AuthPage({ register = false }) {
             />
             <button
               type="button"
-              aria-label={show ? "Hide password" : "Show password"}
+              aria-label={show ? 'Hide password' : 'Show password'}
               onClick={() => setShow(!show)}
             >
               {show ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -180,11 +168,11 @@ export default function AuthPage({ register = false }) {
                 <p className="strength-label">
                   {
                     [
-                      "Use 8+ characters, uppercase, and a number.",
-                      "Getting started",
-                      "Getting stronger",
-                      "Good password",
-                      "Strong password",
+                      'Use 8+ characters, uppercase, and a number.',
+                      'Getting started',
+                      'Getting stronger',
+                      'Good password',
+                      'Strong password',
                     ][strength]
                   }
                 </p>
@@ -192,11 +180,11 @@ export default function AuthPage({ register = false }) {
               <Input
                 label="Confirm password"
                 name="confirmPassword"
-                type={show ? "text" : "password"}
+                type={show ? 'text' : 'password'}
                 autoComplete="new-password"
                 required
               />
-              {role === "student" ? (
+              {role === 'student' ? (
                 <div className="form-grid">
                   <Input label="University" name="university" required />
                   <Input label="Degree / program" name="degree" required />
@@ -215,11 +203,7 @@ export default function AuthPage({ register = false }) {
                 <input type="checkbox" name="remember" defaultChecked />
                 Remember me
               </label>
-              <button
-                type="button"
-                className="text-link"
-                onClick={() => setForgot(true)}
-              >
+              <button type="button" className="text-link" onClick={() => setForgot(true)}>
                 Forgot password?
               </button>
             </div>
@@ -230,25 +214,21 @@ export default function AuthPage({ register = false }) {
             </p>
           )}
           <Button loading={loading} type="submit" className="full-width">
-            {register ? "Create account" : "Log in"}
+            {register ? 'Create account' : 'Log in'}
             <ArrowRight size={16} />
           </Button>
         </form>
         <div className="demo-box">
           <span>TAKE A LOOK AROUND — NO SIGN-UP NEEDED</span>
           <div className="inline-row">
-            <Button
-              variant="secondary"
-              loading={loading}
-              onClick={() => demo("student")}
-            >
+            <Button variant="secondary" loading={loading} onClick={() => demo('student')}>
               <GraduationCap size={16} />
               Student demo
             </Button>
             <Button
               variant="secondary"
               loading={loading}
-              onClick={() => demo("provider")}
+              onClick={() => demo('provider')}
             >
               <Building2 size={16} />
               Provider demo
@@ -256,25 +236,21 @@ export default function AuthPage({ register = false }) {
           </div>
         </div>
         <p className="auth-bottom">
-          {register ? "Already have an account?" : "New to InternTrack?"}{" "}
-          <Link to={register ? "/login" : "/register"}>
-            {register ? "Log in" : "Create an account"}
+          {register ? 'Already have an account?' : 'New to InternTrack?'}{' '}
+          <Link to={register ? '/login' : '/register'}>
+            {register ? 'Log in' : 'Create an account'}
           </Link>
         </p>
         <p className="banner-note">
-          Demo only: no real credentials are stored. Use password Demo123! to
-          return to any demo account, including a newly registered profile.
+          Demo only: no real credentials are stored. Use password Demo123! to return to
+          any demo account, including a newly registered profile.
         </p>
       </div>
-      <Modal
-        open={forgot}
-        onClose={() => setForgot(false)}
-        title="Let’s get you back in"
-      >
+      <Modal open={forgot} onClose={() => setForgot(false)} title="Let’s get you back in">
         <p className="muted">
-          Password reset emails will be available when the backend is connected.
-          For this frontend demo, sign in with your demo email and{" "}
-          <strong>Demo123!</strong>, or use the quick demo buttons.
+          Password reset emails will be available when the backend is connected. For this
+          frontend demo, sign in with your demo email and <strong>Demo123!</strong>, or
+          use the quick demo buttons.
         </p>
         <Button
           className="full-width"

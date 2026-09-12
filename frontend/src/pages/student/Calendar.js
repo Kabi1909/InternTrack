@@ -1,17 +1,11 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import { useData } from "../../context/DataContext";
-import {
-  Button,
-  Card,
-  Input,
-  Modal,
-  PageHeader,
-} from "../../components/common/UI";
-import { mutate, uid } from "../../services/mockStore";
-import { useAction } from "../../hooks/useAction";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { useData } from '../../context/DataContext';
+import { Button, Card, Input, Modal, PageHeader } from '../../components/common/UI';
+import { mutate, uid } from '../../services/mockStore';
+import { useAction } from '../../hooks/useAction';
 export default function Calendar() {
   const { user } = useAuth();
   const data = useData();
@@ -22,30 +16,27 @@ export default function Calendar() {
   const [selected, setSelected] = useState(null);
   const { loading, run } = useAction();
   const dateKey = (d) =>
-    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   const events = [
     ...data.interviews
       .filter((i) => i.userId === user.id)
       .map((i) => ({
         date: i.date,
-        title: `${i.time} · ${data.jobs.find((j) => j.id === i.jobId)?.title || "Interview"}`,
-        type: "interview",
-        to: "/student/interviews",
+        title: `${i.time} · ${data.jobs.find((j) => j.id === i.jobId)?.title || 'Interview'}`,
+        type: 'interview',
+        to: '/student/interviews',
       })),
     ...data.jobs
-      .filter(
-        (j) =>
-          (data.saved[user.id] || []).includes(j.id) && j.status === "Active",
-      )
+      .filter((j) => (data.saved[user.id] || []).includes(j.id) && j.status === 'Active')
       .map((j) => ({
         date: j.deadline,
         title: j.title,
-        type: "deadline",
+        type: 'deadline',
         to: `/jobs/${j.id}`,
       })),
     ...data.followups
       .filter((f) => f.userId === user.id)
-      .map((f) => ({ ...f, type: "followup" })),
+      .map((f) => ({ ...f, type: 'followup' })),
   ];
   const start = new Date(month);
   start.setDate(1 - start.getDay());
@@ -70,9 +61,9 @@ export default function Calendar() {
       <Card className="calendar-card">
         <div className="calendar-toolbar">
           <h2>
-            {month.toLocaleDateString("en-US", {
-              month: "long",
-              year: "numeric",
+            {month.toLocaleDateString('en-US', {
+              month: 'long',
+              year: 'numeric',
             })}
           </h2>
           <div className="inline-row">
@@ -88,9 +79,7 @@ export default function Calendar() {
             <Button
               variant="secondary"
               onClick={() =>
-                setMonth(
-                  new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-                )
+                setMonth(new Date(new Date().getFullYear(), new Date().getMonth(), 1))
               }
             >
               Today
@@ -107,14 +96,14 @@ export default function Calendar() {
           </div>
         </div>
         <div className="calendar-grid">
-          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
+          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
             <div className="calendar-day-name" key={d}>
               {d}
             </div>
           ))}
           {days.map((d) => (
             <div
-              className={`calendar-cell ${d.getMonth() !== month.getMonth() ? "other-month" : ""} ${dateKey(d) === dateKey(new Date()) ? "today" : ""}`}
+              className={`calendar-cell ${d.getMonth() !== month.getMonth() ? 'other-month' : ''} ${dateKey(d) === dateKey(new Date()) ? 'today' : ''}`}
               key={dateKey(d)}
             >
               <span>{d.getDate()}</span>
@@ -159,11 +148,7 @@ export default function Calendar() {
           </span>
         </div>
       </Card>
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        title="A reminder for future you"
-      >
+      <Modal open={open} onClose={() => setOpen(false)} title="A reminder for future you">
         <form
           className="form-stack"
           onSubmit={async (e) => {
@@ -174,11 +159,11 @@ export default function Calendar() {
                 mutate((d) => {
                   d.followups.push({
                     ...values,
-                    id: uid("f"),
+                    id: uid('f'),
                     userId: user.id,
                   });
                 }),
-              "Follow-up added to your calendar",
+              'Follow-up added to your calendar',
             );
             if (result.ok) setOpen(false);
           }}
@@ -195,11 +180,7 @@ export default function Calendar() {
           </Button>
         </form>
       </Modal>
-      <Modal
-        open={!!selected}
-        onClose={() => setSelected(null)}
-        title="Your follow-up"
-      >
+      <Modal open={!!selected} onClose={() => setSelected(null)} title="Your follow-up">
         <p>{selected?.title}</p>
         <p className="muted">{selected?.date}</p>
         <Button
@@ -211,7 +192,7 @@ export default function Calendar() {
                 mutate((d) => {
                   d.followups = d.followups.filter((f) => f.id !== selected.id);
                 }),
-              "Follow-up completed",
+              'Follow-up completed',
             );
             if (result.ok) setSelected(null);
           }}

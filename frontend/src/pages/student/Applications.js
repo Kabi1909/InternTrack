@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
-import { useData } from "../../context/DataContext";
-import { useAuth } from "../../context/AuthContext";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
+import { useData } from '../../context/DataContext';
+import { useAuth } from '../../context/AuthContext';
 import {
   ButtonLink,
   Card,
@@ -12,17 +12,17 @@ import {
   PageHeader,
   SearchBar,
   Select,
-} from "../../components/common/UI";
-import ApplicationStatusBadge from "../../components/applications/ApplicationStatusBadge";
-import { statuses } from "../../data/mockData";
-import { formatDate } from "../../utils/helpers";
+} from '../../components/common/UI';
+import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge';
+import { statuses } from '../../data/mockData';
+import { formatDate } from '../../utils/helpers';
 export default function Applications() {
   const data = useData();
   const { user } = useAuth();
-  const [query, setQuery] = useState("");
-  const [status, setStatus] = useState("");
-  const [company, setCompany] = useState("");
-  const [date, setDate] = useState("");
+  const [query, setQuery] = useState('');
+  const [status, setStatus] = useState('');
+  const [company, setCompany] = useState('');
+  const [date, setDate] = useState('');
   const applications = data.applications.filter((a) => {
     const job = data.jobs.find((j) => j.id === a.jobId);
     return (
@@ -42,11 +42,7 @@ export default function Applications() {
         action={<ButtonLink to="/jobs">Find your next opportunity</ButtonLink>}
       />
       <div className="filter-row">
-        <SearchBar
-          value={query}
-          onChange={setQuery}
-          placeholder="Search applications"
-        />
+        <SearchBar value={query} onChange={setQuery} placeholder="Search applications" />
         <Select
           aria-label="Filter by status"
           value={status}
@@ -81,15 +77,11 @@ export default function Applications() {
           <table className="data-table">
             <thead>
               <tr>
-                {[
-                  "Opportunity",
-                  "Date applied",
-                  "Status",
-                  "Last updated",
-                  "Actions",
-                ].map((h) => (
-                  <th key={h}>{h}</th>
-                ))}
+                {['Opportunity', 'Date applied', 'Status', 'Last updated', 'Actions'].map(
+                  (h) => (
+                    <th key={h}>{h}</th>
+                  ),
+                )}
               </tr>
             </thead>
             <tbody>
@@ -103,11 +95,9 @@ export default function Applications() {
                         <CompanyLogo company={c} />
                         <div>
                           <Link to={`/student/applications/${a.id}`}>
-                            <strong>
-                              {job?.title || "Archived opportunity"}
-                            </strong>
+                            <strong>{job?.title || 'Archived opportunity'}</strong>
                           </Link>
-                          <small>{c?.name || "Company unavailable"}</small>
+                          <small>{c?.name || 'Company unavailable'}</small>
                         </div>
                       </div>
                     </td>
@@ -117,10 +107,7 @@ export default function Applications() {
                     </td>
                     <td data-label="Updated">{formatDate(a.updatedAt)}</td>
                     <td data-label="Actions">
-                      <Link
-                        className="text-link"
-                        to={`/student/applications/${a.id}`}
-                      >
+                      <Link className="text-link" to={`/student/applications/${a.id}`}>
                         View details <ArrowUpRight size={15} />
                       </Link>
                     </td>

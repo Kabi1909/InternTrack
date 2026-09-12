@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { ArrowUpRight, Menu, Route, X } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
-import { ButtonLink } from "../components/common/UI";
+import { useEffect, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import { ArrowUpRight, Menu, Route, X } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { ButtonLink } from '../components/common/UI';
 export function Logo() {
   return (
     <Link to="/" className="logo" aria-label="InternTrack home">
@@ -51,7 +51,7 @@ export default function PublicLayout() {
             className="icon-btn mobile-toggle"
             aria-expanded={open}
             aria-controls="mobile-nav"
-            aria-label={open ? "Close navigation" : "Open navigation"}
+            aria-label={open ? 'Close navigation' : 'Open navigation'}
             onClick={() => setOpen(!open)}
           >
             {open ? <X size={20} /> : <Menu size={20} />}
@@ -67,9 +67,7 @@ export default function PublicLayout() {
             <Link to="/jobs">Browse jobs</Link>
             <Link to="/about">About us</Link>
             {user ? (
-              <ButtonLink to={`/${user.role}/dashboard`}>
-                My workspace
-              </ButtonLink>
+              <ButtonLink to={`/${user.role}/dashboard`}>My workspace</ButtonLink>
             ) : (
               <>
                 <Link to="/login">Log in</Link>
@@ -114,12 +112,10 @@ export default function PublicLayout() {
           </div>
           <div className="footer-bottom">
             <span>
-              © {new Date().getFullYear()} InternTrack. Made for your next
-              chapter.
+              © {new Date().getFullYear()} InternTrack. Made for your next chapter.
             </span>
             <span>
-              Portfolio demo · Opportunities and company listings are
-              illustrative.
+              Portfolio demo · Opportunities and company listings are illustrative.
             </span>
           </div>
         </div>

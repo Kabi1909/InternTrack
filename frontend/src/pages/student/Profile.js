@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Save, CheckCircle2 } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
+import { useState } from 'react';
+import { Save, CheckCircle2 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import {
   Avatar,
   Badge,
@@ -9,31 +9,30 @@ import {
   Input,
   PageHeader,
   SkillTags,
-} from "../../components/common/UI";
-import FileUpload from "../../components/profile/FileUpload";
-import { profileService } from "../../services/profileService";
-import { useAction } from "../../hooks/useAction";
+} from '../../components/common/UI';
+import FileUpload from '../../components/profile/FileUpload';
+import { profileService } from '../../services/profileService';
+import { useAction } from '../../hooks/useAction';
 export default function StudentProfile() {
   const { user } = useAuth();
   const [values, setValues] = useState({ ...user });
   const { loading, run } = useAction();
-  const change = (key) => (e) =>
-    setValues({ ...values, [key]: e.target.value });
+  const change = (key) => (e) => setValues({ ...values, [key]: e.target.value });
   const completion = Math.round(
     ([
-      "name",
-      "email",
-      "phone",
-      "university",
-      "degree",
-      "graduation",
-      "skills",
-      "preferredRoles",
-      "location",
-      "linkedin",
-      "github",
-      "cv",
-      "picture",
+      'name',
+      'email',
+      'phone',
+      'university',
+      'degree',
+      'graduation',
+      'skills',
+      'preferredRoles',
+      'location',
+      'linkedin',
+      'github',
+      'cv',
+      'picture',
     ].filter((k) => values[k]?.length > 0).length /
       13) *
       100,
@@ -42,7 +41,7 @@ export default function StudentProfile() {
     e.preventDefault();
     run(
       () => profileService.updateUser(user.id, values),
-      "Your profile is looking good. Changes saved.",
+      'Your profile is looking good. Changes saved.',
     );
   };
   return (
@@ -56,7 +55,7 @@ export default function StudentProfile() {
         <Card className="profile-summary">
           <Avatar name={values.name} src={values.picture} size="large" />
           <h2>{values.name}</h2>
-          <p>{values.degree || "Your next chapter starts here"}</p>
+          <p>{values.degree || 'Your next chapter starts here'}</p>
           <p>{values.university}</p>
           <div style={{ marginTop: 25 }}>
             <Badge tone="green">
@@ -73,11 +72,9 @@ export default function StudentProfile() {
             >
               <div style={{ width: `${completion}%` }} />
             </div>
-            <p style={{ fontSize: 10 }}>
-              A little more detail. A little more you.
-            </p>
+            <p style={{ fontSize: 10 }}>A little more detail. A little more you.</p>
           </div>
-          <div className="job-tags" style={{ justifyContent: "center" }}>
+          <div className="job-tags" style={{ justifyContent: 'center' }}>
             {values.skills.map((s) => (
               <Badge key={s}>{s}</Badge>
             ))}
@@ -89,39 +86,39 @@ export default function StudentProfile() {
             <FileUpload
               label="Profile picture"
               kind="image"
-              value={values.picture ? "Profile picture selected" : null}
+              value={values.picture ? 'Profile picture selected' : null}
               onChange={(file) => setValues({ ...values, picture: file.data })}
             />
             <div className="form-grid">
               <Input
                 label="Full name"
                 value={values.name}
-                onChange={change("name")}
+                onChange={change('name')}
                 required
               />
               <Input
                 label="Email address"
                 type="email"
                 value={values.email}
-                onChange={change("email")}
+                onChange={change('email')}
                 required
               />
               <Input
                 label="Phone number"
                 type="tel"
-                value={values.phone || ""}
-                onChange={change("phone")}
+                value={values.phone || ''}
+                onChange={change('phone')}
               />
               <Input
                 label="University"
-                value={values.university || ""}
-                onChange={change("university")}
+                value={values.university || ''}
+                onChange={change('university')}
                 required
               />
               <Input
                 label="Degree / program"
-                value={values.degree || ""}
-                onChange={change("degree")}
+                value={values.degree || ''}
+                onChange={change('degree')}
                 required
               />
               <Input
@@ -129,8 +126,8 @@ export default function StudentProfile() {
                 type="number"
                 min="2000"
                 max="2040"
-                value={values.graduation || ""}
-                onChange={change("graduation")}
+                value={values.graduation || ''}
+                onChange={change('graduation')}
               />
             </div>
             <h3>Your skills & ambitions</h3>
@@ -142,27 +139,27 @@ export default function StudentProfile() {
               <Input
                 label="Preferred job roles"
                 placeholder="Frontend Developer, Product Designer"
-                value={values.preferredRoles || ""}
-                onChange={change("preferredRoles")}
+                value={values.preferredRoles || ''}
+                onChange={change('preferredRoles')}
               />
               <Input
                 label="Preferred work location"
-                value={values.location || ""}
-                onChange={change("location")}
+                value={values.location || ''}
+                onChange={change('location')}
               />
               <Input
                 label="LinkedIn URL"
                 type="url"
                 placeholder="https://linkedin.com/in/you"
-                value={values.linkedin || ""}
-                onChange={change("linkedin")}
+                value={values.linkedin || ''}
+                onChange={change('linkedin')}
               />
               <Input
                 label="GitHub URL"
                 type="url"
                 placeholder="https://github.com/you"
-                value={values.github || ""}
-                onChange={change("github")}
+                value={values.github || ''}
+                onChange={change('github')}
               />
             </div>
             <h3>Put your experience on paper</h3>

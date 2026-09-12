@@ -1,5 +1,5 @@
-import { useEffect, useRef, useId, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useId, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   ArrowRight,
   Check,
@@ -10,12 +10,12 @@ import {
   Search,
   SearchX,
   X,
-} from "lucide-react";
-import { initials } from "../../utils/helpers";
+} from 'lucide-react';
+import { initials } from '../../utils/helpers';
 export function Button({
   children,
-  variant = "primary",
-  className = "",
+  variant = 'primary',
+  className = '',
   loading = false,
   ...props
 }) {
@@ -33,8 +33,8 @@ export function Button({
 export function ButtonLink({
   children,
   to,
-  variant = "primary",
-  className = "",
+  variant = 'primary',
+  className = '',
   ...props
 }) {
   return (
@@ -43,7 +43,7 @@ export function ButtonLink({
     </Link>
   );
 }
-export function Input({ label, error, className = "", ...props }) {
+export function Input({ label, error, className = '', ...props }) {
   const id = useId();
   return (
     <label className={`field ${className}`} htmlFor={id}>
@@ -51,18 +51,18 @@ export function Input({ label, error, className = "", ...props }) {
       <input
         id={id}
         aria-invalid={!!error}
-        aria-describedby={error ? id + "-error" : undefined}
+        aria-describedby={error ? id + '-error' : undefined}
         {...props}
       />
       {error && (
-        <small className="error" id={id + "-error"}>
+        <small className="error" id={id + '-error'}>
           {error}
         </small>
       )}
     </label>
   );
 }
-export function Select({ label, children, className = "", ...props }) {
+export function Select({ label, children, className = '', ...props }) {
   const id = useId();
   return (
     <label className={`field ${className}`} htmlFor={id}>
@@ -82,17 +82,17 @@ export function Textarea({ label, ...props }) {
     </label>
   );
 }
-export function Card({ children, className = "", ...props }) {
+export function Card({ children, className = '', ...props }) {
   return (
     <section className={`card ${className}`} {...props}>
       {children}
     </section>
   );
 }
-export function Badge({ children, tone = "neutral" }) {
+export function Badge({ children, tone = 'neutral' }) {
   return <span className={`badge badge-${tone}`}>{children}</span>;
 }
-export function Avatar({ name, src, size = "normal" }) {
+export function Avatar({ name, src, size = 'normal' }) {
   return src ? (
     <img className={`avatar avatar-${size}`} src={src} alt={name} />
   ) : (
@@ -101,20 +101,20 @@ export function Avatar({ name, src, size = "normal" }) {
     </span>
   );
 }
-export function CompanyLogo({ company, size = "" }) {
+export function CompanyLogo({ company, size = '' }) {
   return (
     <span
       className={`company-logo ${size}`}
-      style={{ background: company?.color || "#174e3c" }}
-      aria-label={`${company?.name || "Company"} logo`}
+      style={{ background: company?.color || '#174e3c' }}
+      aria-label={`${company?.name || 'Company'} logo`}
     >
-      {company?.mark || company?.name?.[0] || "I"}
+      {company?.mark || company?.name?.[0] || 'I'}
     </span>
   );
 }
 export function EmptyState({
-  title = "Nothing here yet",
-  description = "Your next chapter is just getting started.",
+  title = 'Nothing here yet',
+  description = 'Your next chapter is just getting started.',
   action,
 }) {
   return (
@@ -167,7 +167,7 @@ export function SectionHeader({
   title,
   description,
   to,
-  link = "View all",
+  link = 'View all',
   children,
 }) {
   return (
@@ -194,11 +194,11 @@ export function Modal({ open, onClose, title, children }) {
     if (!open) return;
     const prev = document.activeElement;
     const old = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
     ref.current?.focus();
     const key = (e) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "Tab") {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'Tab') {
         const els = ref.current.querySelectorAll(
           'button:not(:disabled),a[href],input:not(:disabled),select,textarea,[tabindex="0"]',
         );
@@ -206,8 +206,7 @@ export function Modal({ open, onClose, title, children }) {
           last = els[els.length - 1];
         if (
           e.shiftKey &&
-          (document.activeElement === first ||
-            document.activeElement === ref.current)
+          (document.activeElement === first || document.activeElement === ref.current)
         ) {
           e.preventDefault();
           last?.focus();
@@ -217,10 +216,10 @@ export function Modal({ open, onClose, title, children }) {
         }
       }
     };
-    document.addEventListener("keydown", key);
+    document.addEventListener('keydown', key);
     return () => {
       document.body.style.overflow = old;
-      document.removeEventListener("keydown", key);
+      document.removeEventListener('keydown', key);
       prev?.focus();
     };
   }, [open, onClose]);
@@ -260,7 +259,7 @@ export function ConfirmDialog({
   open,
   onClose,
   onConfirm,
-  title = "Are you sure?",
+  title = 'Are you sure?',
   description,
   loading,
 }) {
@@ -292,8 +291,8 @@ export function Pagination({ page, total, onChange }) {
       {Array.from({ length: total }, (_, i) => (
         <button
           aria-label={`Page ${i + 1}`}
-          aria-current={page === i + 1 ? "page" : undefined}
-          className={page === i + 1 ? "selected" : ""}
+          aria-current={page === i + 1 ? 'page' : undefined}
+          className={page === i + 1 ? 'selected' : ''}
           key={i}
           onClick={() => onChange(i + 1)}
         >
@@ -310,11 +309,7 @@ export function Pagination({ page, total, onChange }) {
     </nav>
   );
 }
-export function SearchBar({
-  value,
-  onChange,
-  placeholder = "Search opportunities…",
-}) {
+export function SearchBar({ value, onChange, placeholder = 'Search opportunities…' }) {
   return (
     <label className="search-input">
       <Search size={18} />
@@ -339,11 +334,11 @@ export function Dropdown({ label, children }) {
   );
 }
 export function SkillTags({ value, onChange }) {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const add = () => {
     const clean = text.trim();
     if (clean && !value.includes(clean)) onChange([...value, clean]);
-    setText("");
+    setText('');
   };
   return (
     <div className="field">
@@ -368,7 +363,7 @@ export function SkillTags({ value, onChange }) {
           onChange={(e) => setText(e.target.value)}
           onBlur={add}
           onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === ",") {
+            if (e.key === 'Enter' || e.key === ',') {
               e.preventDefault();
               add();
             }

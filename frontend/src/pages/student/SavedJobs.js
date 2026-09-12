@@ -1,13 +1,11 @@
-import { useData } from "../../context/DataContext";
-import { useAuth } from "../../context/AuthContext";
-import { ButtonLink, EmptyState, PageHeader } from "../../components/common/UI";
-import JobCard from "../../components/jobs/JobCard";
+import { useData } from '../../context/DataContext';
+import { useAuth } from '../../context/AuthContext';
+import { ButtonLink, EmptyState, PageHeader } from '../../components/common/UI';
+import JobCard from '../../components/jobs/JobCard';
 export default function SavedJobs() {
   const data = useData();
   const { user } = useAuth();
-  const jobs = data.jobs.filter((j) =>
-    (data.saved[user.id] || []).includes(j.id),
-  );
+  const jobs = data.jobs.filter((j) => (data.saved[user.id] || []).includes(j.id));
   return (
     <>
       <PageHeader
@@ -21,11 +19,7 @@ export default function SavedJobs() {
           {jobs.map((job) => (
             <div key={job.id}>
               <JobCard job={job} />
-              <ButtonLink
-                variant="ghost"
-                className="full-width"
-                to={`/jobs/${job.id}`}
-              >
+              <ButtonLink variant="ghost" className="full-width" to={`/jobs/${job.id}`}>
                 Apply now
               </ButtonLink>
             </div>
@@ -35,9 +29,7 @@ export default function SavedJobs() {
         <EmptyState
           title="A home for your maybes"
           description="Save an opportunity by tapping its bookmark. You’ll find it right here."
-          action={
-            <ButtonLink to="/jobs">Find your next possibility</ButtonLink>
-          }
+          action={<ButtonLink to="/jobs">Find your next possibility</ButtonLink>}
         />
       )}
     </>

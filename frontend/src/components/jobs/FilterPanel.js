@@ -1,5 +1,5 @@
-import { categories } from "../../data/mockData";
-import { Input, Select } from "../common/UI";
+import { categories } from '../../data/mockData';
+import { Input, Select } from '../common/UI';
 export default function FilterPanel({ filters, onChange, onClear }) {
   const toggle = (key, value) =>
     onChange({
@@ -15,8 +15,8 @@ export default function FilterPanel({ filters, onChange, onClear }) {
         <button onClick={onClear}>Reset all</button>
       </div>
       {[
-        ["type", "Job type", ["Internship", "Full-time", "Part-time"]],
-        ["mode", "Work arrangement", ["Remote", "Hybrid", "Onsite"]],
+        ['type', 'Job type', ['Internship', 'Full-time', 'Part-time']],
+        ['mode', 'Work arrangement', ['Remote', 'Hybrid', 'Onsite']],
       ].map(([key, title, options]) => (
         <fieldset className="filter-group" key={key}>
           <legend>{title}</legend>

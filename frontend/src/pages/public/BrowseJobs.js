@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { SlidersHorizontal, MapPin } from "lucide-react";
-import { useData } from "../../context/DataContext";
-import { jobService } from "../../services/jobService";
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { SlidersHorizontal, MapPin } from 'lucide-react';
+import { useData } from '../../context/DataContext';
+import { jobService } from '../../services/jobService';
 import {
   Button,
   EmptyState,
@@ -12,28 +12,28 @@ import {
   Pagination,
   SearchBar,
   Skeleton,
-} from "../../components/common/UI";
-import FilterPanel from "../../components/jobs/FilterPanel";
-import JobCard from "../../components/jobs/JobCard";
-const empty = { type: [], mode: [], experience: "", category: "", skills: "" };
+} from '../../components/common/UI';
+import FilterPanel from '../../components/jobs/FilterPanel';
+import JobCard from '../../components/jobs/JobCard';
+const empty = { type: [], mode: [], experience: '', category: '', skills: '' };
 export default function BrowseJobs() {
   const data = useData();
   const [params, setParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [mobile, setMobile] = useState(false);
   const [page, setPage] = useState(1);
-  const [sort, setSort] = useState("newest");
+  const [sort, setSort] = useState('newest');
   const filters = {
     ...empty,
-    type: params.getAll("type"),
-    mode: params.getAll("mode"),
-    category: params.get("category") || "",
-    experience: params.get("experience") || "",
-    skills: params.get("skills") || "",
+    type: params.getAll('type'),
+    mode: params.getAll('mode'),
+    category: params.get('category') || '',
+    experience: params.get('experience') || '',
+    skills: params.get('skills') || '',
   };
-  const query = params.get("q") || "";
-  const location = params.get("location") || "";
+  const query = params.get('q') || '';
+  const location = params.get('location') || '';
   const update = (changes) => {
     const next = new URLSearchParams(params);
     Object.entries(changes).forEach(([key, value]) => {
@@ -47,7 +47,7 @@ export default function BrowseJobs() {
   };
   const load = () => {
     setLoading(true);
-    setError("");
+    setError('');
     jobService
       .list()
       .catch((e) => setError(e.message))
@@ -58,9 +58,9 @@ export default function BrowseJobs() {
     .filter((job) => {
       const company = data.companies.find((c) => c.id === job.companyId);
       return (
-        job.status === "Active" &&
+        job.status === 'Active' &&
         job.deadline >= new Date().toISOString().slice(0, 10) &&
-        `${job.title} ${company?.name} ${job.skills.join(" ")}`
+        `${job.title} ${company?.name} ${job.skills.join(' ')}`
           .toLowerCase()
           .includes(query.toLowerCase()) &&
         `${job.location || company?.location} ${job.mode}`
@@ -71,15 +71,13 @@ export default function BrowseJobs() {
         (!filters.category || job.category === filters.category) &&
         (!filters.experience || job.experience === filters.experience) &&
         (!filters.skills ||
-          job.skills.some((s) =>
-            s.toLowerCase().includes(filters.skills.toLowerCase()),
-          ))
+          job.skills.some((s) => s.toLowerCase().includes(filters.skills.toLowerCase())))
       );
     })
     .sort((a, b) =>
-      sort === "deadline"
+      sort === 'deadline'
         ? a.deadline.localeCompare(b.deadline)
-        : sort === "title"
+        : sort === 'title'
           ? a.title.localeCompare(b.title)
           : b.createdAt.localeCompare(a.createdAt),
     );
@@ -121,8 +119,7 @@ export default function BrowseJobs() {
         <section className="browse-results">
           <div className="results-bar">
             <span>
-              <strong>{results.length}</strong> opportunities for your next
-              chapter
+              <strong>{results.length}</strong> opportunities for your next chapter
             </span>
             <select
               aria-label="Sort opportunities"
@@ -177,11 +174,7 @@ export default function BrowseJobs() {
           )}
         </section>
       </div>
-      <Modal
-        open={mobile}
-        onClose={() => setMobile(false)}
-        title="Find your fit"
-      >
+      <Modal open={mobile} onClose={() => setMobile(false)} title="Find your fit">
         <FilterPanel {...filterProps} />
         <Button
           className="full-width"

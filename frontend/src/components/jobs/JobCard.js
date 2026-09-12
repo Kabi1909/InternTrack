@@ -1,11 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
-import { ArrowUpRight, Bookmark, MapPin, Clock3 } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import { useData } from "../../context/DataContext";
-import { jobService } from "../../services/jobService";
-import { useAction } from "../../hooks/useAction";
-import { Badge, CompanyLogo } from "../common/UI";
-import { formatDate } from "../../utils/helpers";
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowUpRight, Bookmark, MapPin, Clock3 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { useData } from '../../context/DataContext';
+import { jobService } from '../../services/jobService';
+import { useAction } from '../../hooks/useAction';
+import { Badge, CompanyLogo } from '../common/UI';
+import { formatDate } from '../../utils/helpers';
 export default function JobCard({ job, compact = false }) {
   const { user } = useAuth();
   const data = useData();
@@ -14,26 +14,26 @@ export default function JobCard({ job, compact = false }) {
   const company = data.companies.find((c) => c.id === job.companyId);
   const saved = (data.saved[user?.id] || []).includes(job.id);
   const save = () => {
-    if (!user) return navigate("/login");
-    if (user.role !== "student") return;
+    if (!user) return navigate('/login');
+    if (user.role !== 'student') return;
     run(
       () => jobService.toggleSaved(user.id, job.id),
-      saved ? "Removed from saved jobs" : "Opportunity saved",
+      saved ? 'Removed from saved jobs' : 'Opportunity saved',
     );
   };
   return (
-    <article className={`job-card ${compact ? "compact" : ""}`}>
+    <article className={`job-card ${compact ? 'compact' : ''}`}>
       <div className="job-card-top">
         <CompanyLogo company={company} />
         <span className="company-name">{company?.name}</span>
-        {user?.role !== "provider" && (
+        {user?.role !== 'provider' && (
           <button
-            className={`icon-btn save-btn ${saved ? "is-saved" : ""}`}
-            aria-label={`${saved ? "Unsave" : "Save"} ${job.title}`}
+            className={`icon-btn save-btn ${saved ? 'is-saved' : ''}`}
+            aria-label={`${saved ? 'Unsave' : 'Save'} ${job.title}`}
             aria-pressed={saved}
             onClick={save}
           >
-            <Bookmark size={19} fill={saved ? "currentColor" : "none"} />
+            <Bookmark size={19} fill={saved ? 'currentColor' : 'none'} />
           </button>
         )}
       </div>
@@ -42,9 +42,7 @@ export default function JobCard({ job, compact = false }) {
       </Link>
       <div className="job-location">
         <MapPin size={14} />
-        {company?.location === "Remote"
-          ? "Worldwide"
-          : job.location || company?.location}
+        {company?.location === 'Remote' ? 'Worldwide' : job.location || company?.location}
         <span>·</span>
         {job.mode}
       </div>
@@ -57,11 +55,8 @@ export default function JobCard({ job, compact = false }) {
       {!compact && (
         <div className="job-bottom">
           <span>
-            <Clock3 size={13} /> Apply by{" "}
-            {formatDate(job.deadline).replace(
-              ", " + new Date().getFullYear(),
-              "",
-            )}
+            <Clock3 size={13} /> Apply by{' '}
+            {formatDate(job.deadline).replace(', ' + new Date().getFullYear(), '')}
           </span>
           <Link to={`/jobs/${job.id}`} aria-label={`View ${job.title}`}>
             <ArrowUpRight size={20} />

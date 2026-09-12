@@ -1,4 +1,4 @@
-import { readStore, delay, mutate, uid } from "./mockStore";
+import { readStore, delay, mutate, uid } from './mockStore';
 export const jobService = {
   list: () => delay(readStore().jobs),
   save: (job) =>
@@ -6,7 +6,7 @@ export const jobService = {
       const found = data.jobs.findIndex((j) => j.id === job.id);
       const result = {
         ...job,
-        id: job.id || uid("j"),
+        id: job.id || uid('j'),
         createdAt: job.createdAt || new Date().toISOString().slice(0, 10),
       };
       if (found >= 0) data.jobs[found] = result;
@@ -15,7 +15,7 @@ export const jobService = {
     }),
   close: (id) =>
     mutate((data) => {
-      data.jobs.find((j) => j.id === id).status = "Closed";
+      data.jobs.find((j) => j.id === id).status = 'Closed';
     }),
   remove: (id) =>
     mutate((data) => {

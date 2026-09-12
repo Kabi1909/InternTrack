@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Save, Building2 } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import { useData } from "../../context/DataContext";
+import { useState } from 'react';
+import { Save, Building2 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { useData } from '../../context/DataContext';
 import {
   Avatar,
   Button,
@@ -10,10 +10,10 @@ import {
   Input,
   PageHeader,
   Textarea,
-} from "../../components/common/UI";
-import FileUpload from "../../components/profile/FileUpload";
-import { profileService } from "../../services/profileService";
-import { useAction } from "../../hooks/useAction";
+} from '../../components/common/UI';
+import FileUpload from '../../components/profile/FileUpload';
+import { profileService } from '../../services/profileService';
+import { useAction } from '../../hooks/useAction';
 export default function CompanyProfile() {
   const { user } = useAuth();
   const data = useData();
@@ -23,8 +23,7 @@ export default function CompanyProfile() {
     contactEmail: company.contactEmail || user.email,
   });
   const { loading, run } = useAction();
-  const change = (key) => (e) =>
-    setValues({ ...values, [key]: e.target.value });
+  const change = (key) => (e) => setValues({ ...values, [key]: e.target.value });
   return (
     <>
       <PageHeader
@@ -53,7 +52,7 @@ export default function CompanyProfile() {
               e.preventDefault();
               run(
                 () => profileService.updateCompany(company.id, values),
-                "Company profile saved",
+                'Company profile saved',
               );
             }}
           >
@@ -61,47 +60,47 @@ export default function CompanyProfile() {
             <FileUpload
               kind="image"
               label="Company logo"
-              value={values.picture ? "Company logo selected" : null}
+              value={values.picture ? 'Company logo selected' : null}
               onChange={(file) => setValues({ ...values, picture: file.data })}
             />
             <div className="form-grid">
               <Input
                 label="Company name"
                 value={values.name}
-                onChange={change("name")}
+                onChange={change('name')}
                 required
               />
               <Input
                 label="Industry"
                 value={values.industry}
-                onChange={change("industry")}
+                onChange={change('industry')}
                 required
               />
               <Input
                 label="Website"
                 type="url"
                 value={values.website}
-                onChange={change("website")}
+                onChange={change('website')}
                 placeholder="https://yourcompany.com"
               />
               <Input
                 label="Location"
                 value={values.location}
-                onChange={change("location")}
+                onChange={change('location')}
                 required
               />
               <Input
                 label="Contact email"
                 type="email"
                 value={values.contactEmail}
-                onChange={change("contactEmail")}
+                onChange={change('contactEmail')}
                 required
               />
             </div>
             <Textarea
               label="Company description"
               value={values.description}
-              onChange={change("description")}
+              onChange={change('description')}
               required
               rows={6}
             />

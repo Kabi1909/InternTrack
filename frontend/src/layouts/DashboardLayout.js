@@ -1,11 +1,5 @@
-import { useEffect, useState } from "react";
-import {
-  Link,
-  NavLink,
-  Outlet,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   BriefcaseBusiness,
@@ -22,29 +16,29 @@ import {
   Menu,
   X,
   Sparkles,
-} from "lucide-react";
-import { useAuth } from "../context/AuthContext";
-import { useData } from "../context/DataContext";
-import { Avatar, Dropdown } from "../components/common/UI";
-import { Logo } from "./PublicLayout";
+} from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { useData } from '../context/DataContext';
+import { Avatar, Dropdown } from '../components/common/UI';
+import { Logo } from './PublicLayout';
 const studentLinks = [
-  ["Dashboard", "dashboard", LayoutDashboard],
-  ["Browse Jobs", "/jobs", BriefcaseBusiness],
-  ["My Applications", "applications", FileText],
-  ["Saved Jobs", "saved-jobs", Bookmark],
-  ["Interviews", "interviews", Video],
-  ["Calendar", "calendar", CalendarDays],
-  ["Notifications", "notifications", Bell],
-  ["Profile", "profile", UserRound],
+  ['Dashboard', 'dashboard', LayoutDashboard],
+  ['Browse Jobs', '/jobs', BriefcaseBusiness],
+  ['My Applications', 'applications', FileText],
+  ['Saved Jobs', 'saved-jobs', Bookmark],
+  ['Interviews', 'interviews', Video],
+  ['Calendar', 'calendar', CalendarDays],
+  ['Notifications', 'notifications', Bell],
+  ['Profile', 'profile', UserRound],
 ];
 const providerLinks = [
-  ["Dashboard", "dashboard", LayoutDashboard],
-  ["Job Postings", "jobs", BriefcaseBusiness],
-  ["Create Job", "jobs/new", Plus],
-  ["Applicants", "applicants", Users],
-  ["Interviews", "interviews", Video],
-  ["Notifications", "notifications", Bell],
-  ["Company Profile", "profile", Building2],
+  ['Dashboard', 'dashboard', LayoutDashboard],
+  ['Job Postings', 'jobs', BriefcaseBusiness],
+  ['Create Job', 'jobs/new', Plus],
+  ['Applicants', 'applicants', Users],
+  ['Interviews', 'interviews', Video],
+  ['Notifications', 'notifications', Bell],
+  ['Company Profile', 'profile', Building2],
 ];
 export default function DashboardLayout({ role }) {
   const { user, logout } = useAuth();
@@ -52,24 +46,22 @@ export default function DashboardLayout({ role }) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const links = role === "student" ? studentLinks : providerLinks;
-  const unread = data.notifications.filter(
-    (n) => n.userId === user.id && !n.read,
-  ).length;
+  const links = role === 'student' ? studentLinks : providerLinks;
+  const unread = data.notifications.filter((n) => n.userId === user.id && !n.read).length;
   const current =
     links.find(([, path]) => location.pathname === `/${role}/${path}`)?.[0] ||
-    "Workspace";
+    'Workspace';
   useEffect(() => setOpen(false), [location.pathname]);
   useEffect(() => {
     const close = (e) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === 'Escape') setOpen(false);
     };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
   }, []);
   const signOut = () => {
     logout();
-    navigate("/");
+    navigate('/');
   };
   return (
     <div className="dashboard-shell">
@@ -84,7 +76,7 @@ export default function DashboardLayout({ role }) {
         />
       )}
       <aside
-        className={`sidebar ${open ? "open" : ""}`}
+        className={`sidebar ${open ? 'open' : ''}`}
         aria-label={`${role} navigation`}
       >
         <Logo />
@@ -96,18 +88,14 @@ export default function DashboardLayout({ role }) {
           <X size={16} />
         </button>
         <div className="workspace-label">
-          {role === "student" ? "YOUR CAREER SPACE" : "EMPLOYER WORKSPACE"}
+          {role === 'student' ? 'YOUR CAREER SPACE' : 'EMPLOYER WORKSPACE'}
         </div>
         <nav className="sidebar-nav">
           {links.map(([label, path, Icon]) => (
-            <NavLink
-              end
-              to={path.startsWith("/") ? path : `/${role}/${path}`}
-              key={path}
-            >
+            <NavLink end to={path.startsWith('/') ? path : `/${role}/${path}`} key={path}>
               <Icon size={18} />
               {label}
-              {path === "notifications" && unread > 0 && (
+              {path === 'notifications' && unread > 0 && (
                 <span className="sidebar-count">{unread}</span>
               )}
             </NavLink>
@@ -117,14 +105,14 @@ export default function DashboardLayout({ role }) {
           <div className="sidebar-note">
             <Sparkles size={20} />
             <h3>
-              {role === "student"
-                ? "Small steps. Big futures."
-                : "Great teams start here."}
+              {role === 'student'
+                ? 'Small steps. Big futures.'
+                : 'Great teams start here.'}
             </h3>
             <p>
-              {role === "student"
-                ? "Your next opportunity could be one application away."
-                : "Find the potential that moves your team forward."}
+              {role === 'student'
+                ? 'Your next opportunity could be one application away.'
+                : 'Find the potential that moves your team forward.'}
             </p>
           </div>
           <button className="sidebar-logout" onClick={signOut}>
@@ -135,9 +123,7 @@ export default function DashboardLayout({ role }) {
             <Avatar name={user.name} src={user.picture} />
             <div>
               <strong>{user.name}</strong>
-              <small>
-                {role === "student" ? "Student account" : "Employer account"}
-              </small>
+              <small>{role === 'student' ? 'Student account' : 'Employer account'}</small>
             </div>
           </Link>
         </div>

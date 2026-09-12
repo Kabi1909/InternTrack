@@ -1,19 +1,19 @@
-import { Badge } from "../common/UI";
+import { Badge } from '../common/UI';
 export default function ApplicationStatusBadge({ status }) {
   const tone = {
-    Applied: "blue",
-    "Under Review": "amber",
-    Shortlisted: "purple",
-    "Interview Scheduled": "blue",
-    Offered: "green",
-    Rejected: "red",
-    Withdrawn: "neutral",
-    Active: "green",
-    Closed: "neutral",
-    Expired: "red",
-    Draft: "amber",
-    Upcoming: "blue",
-    Completed: "green",
+    Applied: 'blue',
+    'Under Review': 'amber',
+    Shortlisted: 'purple',
+    'Interview Scheduled': 'blue',
+    Offered: 'green',
+    Rejected: 'red',
+    Withdrawn: 'neutral',
+    Active: 'green',
+    Closed: 'neutral',
+    Expired: 'red',
+    Draft: 'amber',
+    Upcoming: 'blue',
+    Completed: 'green',
   };
-  return <Badge tone={tone[status] || "neutral"}>{status}</Badge>;
+  return <Badge tone={tone[status] || 'neutral'}>{status}</Badge>;
 }

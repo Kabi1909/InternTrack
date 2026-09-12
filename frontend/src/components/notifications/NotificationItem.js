@@ -1,18 +1,16 @@
-import { Bell, Check, Video, FileText, Clock3, Users } from "lucide-react";
-import { formatDate } from "../../utils/helpers";
+import { Bell, Check, Video, FileText, Clock3, Users } from 'lucide-react';
+import { formatDate } from '../../utils/helpers';
 const icons = {
-  "Interview scheduled": Video,
-  "Application submitted": FileText,
-  "Deadline approaching": Clock3,
-  "Job closing soon": Clock3,
-  "New applicant received": Users,
+  'Interview scheduled': Video,
+  'Application submitted': FileText,
+  'Deadline approaching': Clock3,
+  'Job closing soon': Clock3,
+  'New applicant received': Users,
 };
 export default function NotificationItem({ notification, onRead }) {
   const Icon = icons[notification.type] || Bell;
   return (
-    <article
-      className={`notification-item ${notification.read ? "" : "unread"}`}
-    >
+    <article className={`notification-item ${notification.read ? '' : 'unread'}`}>
       <span className="notification-icon">
         <Icon size={19} />
       </span>

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useData } from "../../context/DataContext";
-import { useAuth } from "../../context/AuthContext";
-import { Plus } from "lucide-react";
+import { useState } from 'react';
+import { useData } from '../../context/DataContext';
+import { useAuth } from '../../context/AuthContext';
+import { Plus } from 'lucide-react';
 import {
   Button,
   ButtonLink,
@@ -11,16 +11,16 @@ import {
   PageHeader,
   SearchBar,
   Select,
-} from "../../components/common/UI";
-import ApplicationStatusBadge from "../../components/applications/ApplicationStatusBadge";
-import { jobService } from "../../services/jobService";
-import { useAction } from "../../hooks/useAction";
-import { formatDate } from "../../utils/helpers";
+} from '../../components/common/UI';
+import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge';
+import { jobService } from '../../services/jobService';
+import { useAction } from '../../hooks/useAction';
+import { formatDate } from '../../utils/helpers';
 export default function JobManagement() {
   const { user } = useAuth();
   const data = useData();
-  const [query, setQuery] = useState("");
-  const [status, setStatus] = useState("");
+  const [query, setQuery] = useState('');
+  const [status, setStatus] = useState('');
   const [confirm, setConfirm] = useState(null);
   const { loading, run } = useAction();
   const jobs = data.jobs
@@ -28,9 +28,8 @@ export default function JobManagement() {
     .map((j) => ({
       ...j,
       displayStatus:
-        j.status === "Active" &&
-        j.deadline < new Date().toISOString().slice(0, 10)
-          ? "Expired"
+        j.status === 'Active' && j.deadline < new Date().toISOString().slice(0, 10)
+          ? 'Expired'
           : j.status,
     }))
     .filter(
@@ -41,10 +40,10 @@ export default function JobManagement() {
   const execute = async () => {
     const result = await run(
       () =>
-        confirm.action === "delete"
+        confirm.action === 'delete'
           ? jobService.remove(confirm.job.id)
           : jobService.close(confirm.job.id),
-      confirm.action === "delete" ? "Vacancy deleted" : "Vacancy closed",
+      confirm.action === 'delete' ? 'Vacancy deleted' : 'Vacancy closed',
     );
     if (result.ok) setConfirm(null);
   };
@@ -73,7 +72,7 @@ export default function JobManagement() {
           onChange={(e) => setStatus(e.target.value)}
         >
           <option value="">All statuses</option>
-          {["Active", "Closed", "Expired", "Draft"].map((s) => (
+          {['Active', 'Closed', 'Expired', 'Draft'].map((s) => (
             <option key={s}>{s}</option>
           ))}
         </Select>
@@ -84,12 +83,12 @@ export default function JobManagement() {
             <thead>
               <tr>
                 {[
-                  "Opportunity",
-                  "Created",
-                  "Deadline",
-                  "Applicants",
-                  "Status",
-                  "Actions",
+                  'Opportunity',
+                  'Created',
+                  'Deadline',
+                  'Applicants',
+                  'Status',
+                  'Actions',
                 ].map((h) => (
                   <th key={h}>{h}</th>
                 ))}
@@ -119,10 +118,7 @@ export default function JobManagement() {
                       <ButtonLink variant="secondary" to={`/jobs/${j.id}`}>
                         View
                       </ButtonLink>
-                      <ButtonLink
-                        variant="secondary"
-                        to={`/provider/jobs/${j.id}/edit`}
-                      >
+                      <ButtonLink variant="secondary" to={`/provider/jobs/${j.id}/edit`}>
                         Edit
                       </ButtonLink>
                       <ButtonLink
@@ -131,19 +127,17 @@ export default function JobManagement() {
                       >
                         Applicants
                       </ButtonLink>
-                      {j.displayStatus === "Active" && (
+                      {j.displayStatus === 'Active' && (
                         <Button
                           variant="ghost"
-                          onClick={() =>
-                            setConfirm({ job: j, action: "close" })
-                          }
+                          onClick={() => setConfirm({ job: j, action: 'close' })}
                         >
                           Close
                         </Button>
                       )}
                       <Button
                         variant="danger"
-                        onClick={() => setConfirm({ job: j, action: "delete" })}
+                        onClick={() => setConfirm({ job: j, action: 'delete' })}
                       >
                         Delete
                       </Button>
@@ -158,9 +152,7 @@ export default function JobManagement() {
             title="Make your next great hire possible"
             description="Post a new opportunity or adjust your filters."
             action={
-              <ButtonLink to="/provider/jobs/new">
-                Create an opportunity
-              </ButtonLink>
+              <ButtonLink to="/provider/jobs/new">Create an opportunity</ButtonLink>
             }
           />
         )}
@@ -169,12 +161,10 @@ export default function JobManagement() {
         open={!!confirm}
         onClose={() => setConfirm(null)}
         title={
-          confirm?.action === "delete"
-            ? "Delete this vacancy?"
-            : "Close applications?"
+          confirm?.action === 'delete' ? 'Delete this vacancy?' : 'Close applications?'
         }
         description={
-          confirm?.action === "delete"
+          confirm?.action === 'delete'
             ? `“${confirm?.job.title}” will be removed. Existing application records are kept as archived opportunities.`
             : `“${confirm?.job.title}” will stop accepting applications. Existing candidates stay in your pipeline.`
         }

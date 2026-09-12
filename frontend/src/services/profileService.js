@@ -1,4 +1,4 @@
-import { mutate } from "./mockStore";
+import { mutate } from './mockStore';
 export const profileService = {
   updateUser: (id, values) =>
     mutate((d) => {

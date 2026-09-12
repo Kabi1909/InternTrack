@@ -1,5 +1,5 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 export function useAction() {
   const [loading, setLoading] = useState(false);
   const run = async (fn, message) => {
@@ -9,7 +9,7 @@ export function useAction() {
       if (message) toast.success(message);
       return { ok: true, result };
     } catch (error) {
-      toast.error(error.message || "Something went wrong. Please try again.");
+      toast.error(error.message || 'Something went wrong. Please try again.');
       return { ok: false };
     } finally {
       setLoading(false);

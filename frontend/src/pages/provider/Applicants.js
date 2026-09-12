@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useData } from "../../context/DataContext";
-import { useAuth } from "../../context/AuthContext";
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useData } from '../../context/DataContext';
+import { useAuth } from '../../context/AuthContext';
 import {
   Avatar,
   Badge,
@@ -13,20 +13,20 @@ import {
   Input,
   PageHeader,
   Select,
-} from "../../components/common/UI";
-import ApplicationStatusBadge from "../../components/applications/ApplicationStatusBadge";
-import InterviewModal from "../../components/applications/InterviewModal";
-import { applicationService } from "../../services/applicationService";
-import { useAction } from "../../hooks/useAction";
-import { statuses } from "../../data/mockData";
-import { formatDate } from "../../utils/helpers";
+} from '../../components/common/UI';
+import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge';
+import InterviewModal from '../../components/applications/InterviewModal';
+import { applicationService } from '../../services/applicationService';
+import { useAction } from '../../hooks/useAction';
+import { statuses } from '../../data/mockData';
+import { formatDate } from '../../utils/helpers';
 export default function Applicants() {
   const { id } = useParams();
   const { user } = useAuth();
   const data = useData();
-  const [status, setStatus] = useState("");
-  const [university, setUniversity] = useState("");
-  const [skill, setSkill] = useState("");
+  const [status, setStatus] = useState('');
+  const [university, setUniversity] = useState('');
+  const [skill, setSkill] = useState('');
   const [schedule, setSchedule] = useState(null);
   const [reject, setReject] = useState(null);
   const { loading, run } = useAction();
@@ -41,18 +41,14 @@ export default function Applicants() {
       />
     );
   const candidates = data.applications
-    .filter(
-      (a) => jobs.some((j) => j.id === a.jobId) && (!id || a.jobId === id),
-    )
+    .filter((a) => jobs.some((j) => j.id === a.jobId) && (!id || a.jobId === id))
     .filter((a) => {
       const candidate = data.users.find((u) => u.id === a.userId);
       return (
         (!status || a.status === status) &&
         (!university || candidate?.university === university) &&
         (!skill ||
-          candidate?.skills.some((s) =>
-            s.toLowerCase().includes(skill.toLowerCase()),
-          ))
+          candidate?.skills.some((s) => s.toLowerCase().includes(skill.toLowerCase())))
       );
     });
   return (
@@ -61,13 +57,13 @@ export default function Applicants() {
         eyebrow="LOOK BEYOND THE RESUME"
         title={
           job
-            ? "Meet the potential behind every application."
-            : "Your next great teammate is out there."
+            ? 'Meet the potential behind every application.'
+            : 'Your next great teammate is out there.'
         }
         description={
           job
             ? `${job.title} · ${candidates.length} candidates`
-            : "Discover the people who could help write your team’s next chapter."
+            : 'Discover the people who could help write your team’s next chapter.'
         }
       />
       <div className="filter-row">
@@ -89,9 +85,7 @@ export default function Applicants() {
           <option value="">All universities</option>
           {[
             ...new Set(
-              data.users
-                .filter((u) => u.role === "student")
-                .map((u) => u.university),
+              data.users.filter((u) => u.role === 'student').map((u) => u.university),
             ),
           ]
             .filter(Boolean)
@@ -111,9 +105,7 @@ export default function Applicants() {
           {candidates.map((a) => {
             const c = data.users.find((u) => u.id === a.userId);
             const job = data.jobs.find((j) => j.id === a.jobId);
-            const terminal = ["Rejected", "Withdrawn", "Offered"].includes(
-              a.status,
-            );
+            const terminal = ['Rejected', 'Withdrawn', 'Offered'].includes(a.status);
             return (
               <Card key={a.id}>
                 <div className="inline-row">
@@ -140,22 +132,19 @@ export default function Applicants() {
                   <ApplicationStatusBadge status={a.status} />
                 </div>
                 <div className="action-buttons">
-                  <ButtonLink
-                    variant="secondary"
-                    to={`/provider/applicants/${a.id}`}
-                  >
+                  <ButtonLink variant="secondary" to={`/provider/applicants/${a.id}`}>
                     View profile
                   </ButtonLink>
                   <Button
                     variant="secondary"
-                    disabled={terminal || a.status === "Shortlisted" || loading}
+                    disabled={terminal || a.status === 'Shortlisted' || loading}
                     onClick={() =>
                       run(
                         () =>
                           applicationService.update(a.id, {
-                            status: "Shortlisted",
+                            status: 'Shortlisted',
                           }),
-                        "Candidate shortlisted",
+                        'Candidate shortlisted',
                       )
                     }
                   >
@@ -199,8 +188,8 @@ export default function Applicants() {
         loading={loading}
         onConfirm={async () => {
           const result = await run(
-            () => applicationService.update(reject.id, { status: "Rejected" }),
-            "Application status updated",
+            () => applicationService.update(reject.id, { status: 'Rejected' }),
+            'Application status updated',
           );
           if (result.ok) setReject(null);
         }}

@@ -1,11 +1,11 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @theme {
   --color-forest: #174e3c;
   --color-ivory: #f7f8f2;
-  --font-sans: "Inter", "Segoe UI", sans-serif;
+  --font-sans: 'Inter', 'Segoe UI', sans-serif;
 }
 :root {
-  font-family: "Inter", "Segoe UI", sans-serif;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
   color: #263c32;
   background: #fff;
   font-synthesis: none;
@@ -90,8 +90,8 @@ textarea {
   min-height: 44px;
   outline: none;
 }
-input[type="checkbox"],
-input[type="radio"] {
+input[type='checkbox'],
+input[type='radio'] {
   width: 16px;
   min-height: 16px;
   accent-color: var(--green);
@@ -851,7 +851,7 @@ select:focus {
   position: relative;
 }
 .step:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 24px;
   left: 68%;
@@ -1259,7 +1259,7 @@ select:focus {
   line-height: 1.6;
 }
 .auth-quote small {
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   display: block;
   font-size: 11px;
   color: #7f8b76;
@@ -1789,7 +1789,7 @@ select:focus {
   color: #9ca591;
 }
 .timeline-step:after {
-  content: "";
+  content: '';
   height: 2px;
   background: #e7ecdf;
   position: absolute;
@@ -2057,7 +2057,7 @@ select:focus {
   padding: 10px;
 }
 .notification-item.unread h3:after {
-  content: "";
+  content: '';
   display: inline-block;
   width: 6px;
   height: 6px;

@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Input, Select, SkillTags, Textarea } from "../common/UI";
-import { categories } from "../../data/mockData";
-import { jobService } from "../../services/jobService";
-import { useAction } from "../../hooks/useAction";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Input, Select, SkillTags, Textarea } from '../common/UI';
+import { categories } from '../../data/mockData';
+import { jobService } from '../../services/jobService';
+import { useAction } from '../../hooks/useAction';
 export default function JobForm({ job, company }) {
   const navigate = useNavigate();
   const [skills, setSkills] = useState(job?.skills || []);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const { loading, run } = useAction();
   const submit = async (e) => {
     e.preventDefault();
     const values = Object.fromEntries(new FormData(e.currentTarget));
-    const status = e.nativeEvent.submitter?.value || "Active";
+    const status = e.nativeEvent.submitter?.value || 'Active';
     if (!skills.length) {
-      setError("Add at least one required skill.");
+      setError('Add at least one required skill.');
       return;
     }
     const result = await run(
@@ -27,9 +27,9 @@ export default function JobForm({ job, company }) {
           positions: Number(values.positions),
           status,
         }),
-      status === "Draft" ? "Draft saved" : "Opportunity saved and published",
+      status === 'Draft' ? 'Draft saved' : 'Opportunity saved and published',
     );
-    if (result.ok) navigate("/provider/jobs");
+    if (result.ok) navigate('/provider/jobs');
   };
   return (
     <form className="form-stack" onSubmit={submit}>
@@ -55,7 +55,7 @@ export default function JobForm({ job, company }) {
         <Select
           label="Employment type"
           name="type"
-          defaultValue={job?.type || "Internship"}
+          defaultValue={job?.type || 'Internship'}
         >
           <option>Internship</option>
           <option>Full-time</option>
@@ -85,11 +85,7 @@ export default function JobForm({ job, company }) {
       <SkillTags value={skills} onChange={setSkills} />
       <h3>The practical details</h3>
       <div className="form-grid">
-        <Select
-          label="Work arrangement"
-          name="mode"
-          defaultValue={job?.mode || "Hybrid"}
-        >
+        <Select label="Work arrangement" name="mode" defaultValue={job?.mode || 'Hybrid'}>
           <option>Remote</option>
           <option>Hybrid</option>
           <option>Onsite</option>
@@ -127,7 +123,7 @@ export default function JobForm({ job, company }) {
         <Select
           label="Experience requirements"
           name="experience"
-          defaultValue={job?.experience || "No experience"}
+          defaultValue={job?.experience || 'No experience'}
         >
           <option>No experience</option>
           <option>Entry level</option>
@@ -140,23 +136,14 @@ export default function JobForm({ job, company }) {
         </p>
       )}
       <div className="form-actions">
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={() => navigate("/provider/jobs")}
-        >
+        <Button type="button" variant="ghost" onClick={() => navigate('/provider/jobs')}>
           Cancel
         </Button>
-        <Button
-          type="submit"
-          variant="secondary"
-          value="Draft"
-          loading={loading}
-        >
+        <Button type="submit" variant="secondary" value="Draft" loading={loading}>
           Save as draft
         </Button>
         <Button type="submit" value="Active" loading={loading}>
-          {job ? "Save & publish changes" : "Publish opportunity"}
+          {job ? 'Save & publish changes' : 'Publish opportunity'}
         </Button>
       </div>
     </form>

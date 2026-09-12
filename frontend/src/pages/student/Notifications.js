@@ -1,16 +1,11 @@
-import { useState } from "react";
-import { CheckCheck } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import { useData } from "../../context/DataContext";
-import {
-  Button,
-  Card,
-  EmptyState,
-  PageHeader,
-} from "../../components/common/UI";
-import NotificationItem from "../../components/notifications/NotificationItem";
-import { notificationService } from "../../services/notificationService";
-import { useAction } from "../../hooks/useAction";
+import { useState } from 'react';
+import { CheckCheck } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { useData } from '../../context/DataContext';
+import { Button, Card, EmptyState, PageHeader } from '../../components/common/UI';
+import NotificationItem from '../../components/notifications/NotificationItem';
+import { notificationService } from '../../services/notificationService';
+import { useAction } from '../../hooks/useAction';
 export default function Notifications() {
   const { user } = useAuth();
   const data = useData();
@@ -24,7 +19,7 @@ export default function Notifications() {
       <PageHeader
         eyebrow="STAY IN THE KNOW"
         title="A little update can mean a lot."
-        description={`You have ${unread} unread ${unread === 1 ? "update" : "updates"}. Here’s what’s happening in your workspace.`}
+        description={`You have ${unread} unread ${unread === 1 ? 'update' : 'updates'}. Here’s what’s happening in your workspace.`}
         action={
           <Button
             variant="secondary"
@@ -33,7 +28,7 @@ export default function Notifications() {
             onClick={() =>
               run(
                 () => notificationService.markAll(user.id),
-                "All caught up. Notifications marked as read.",
+                'All caught up. Notifications marked as read.',
               )
             }
           >
@@ -44,21 +39,21 @@ export default function Notifications() {
       />
       <div className="segmented" style={{ marginBottom: 25 }}>
         <button
-          className={!unreadOnly ? "active" : ""}
+          className={!unreadOnly ? 'active' : ''}
           aria-pressed={!unreadOnly}
           onClick={() => setUnreadOnly(false)}
         >
           All updates ({all.length})
         </button>
         <button
-          className={unreadOnly ? "active" : ""}
+          className={unreadOnly ? 'active' : ''}
           aria-pressed={unreadOnly}
           onClick={() => setUnreadOnly(true)}
         >
           Unread ({unread})
         </button>
       </div>
-      <Card style={{ padding: 0, overflow: "hidden" }}>
+      <Card style={{ padding: 0, overflow: 'hidden' }}>
         {notifications.length ? (
           notifications.map((n) => (
             <NotificationItem

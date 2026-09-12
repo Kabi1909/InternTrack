@@ -1,5 +1,5 @@
-import { ArrowUpRight } from "lucide-react";
-import { Card } from "../common/UI";
+import { ArrowUpRight } from 'lucide-react';
+import { Card } from '../common/UI';
 export default function StatCard({ label, value, icon: Icon, description }) {
   return (
     <Card className="stat-card">
@@ -9,7 +9,7 @@ export default function StatCard({ label, value, icon: Icon, description }) {
       </div>
       <strong>{value}</strong>
       <small>
-        {description || "Across your workspace"}
+        {description || 'Across your workspace'}
         <ArrowUpRight size={13} />
       </small>
     </Card>
