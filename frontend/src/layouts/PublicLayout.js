@@ -1,7 +1,129 @@
-import {useEffect,useState} from 'react';
-import {Link,NavLink,Outlet,useLocation} from 'react-router-dom';
-import {ArrowUpRight,Menu,Route,X} from 'lucide-react';
-import {useAuth} from '../context/AuthContext';
-import {ButtonLink} from '../components/common/UI';
-export function Logo(){return <Link to="/" className="logo" aria-label="InternTrack home"><span className="logo-icon"><Route size={20}/></span>InternTrack<span className="logo-dot">.</span></Link>;}
-export default function PublicLayout(){const [open,setOpen]=useState(false);const {user}=useAuth();const {pathname}=useLocation();useEffect(()=>setOpen(false),[pathname]);return <><a href="#main-content" className="skip-link">Skip to content</a><header className="public-header"><div className="container public-nav"><Logo/><nav className="nav-links" aria-label="Main navigation"><NavLink to="/">Home</NavLink><NavLink to="/jobs">Browse jobs</NavLink><NavLink to="/about">About us</NavLink></nav><div className="nav-actions">{user?<ButtonLink to={`/${user.role}/dashboard`}>My workspace <ArrowUpRight size={15}/></ButtonLink>:<><Link className="btn btn-ghost" to="/login">Log in</Link><ButtonLink to="/register">Get started <ArrowUpRight size={15}/></ButtonLink></>}</div><button className="icon-btn mobile-toggle" aria-expanded={open} aria-controls="mobile-nav" aria-label={open?'Close navigation':'Open navigation'} onClick={()=>setOpen(!open)}>{open?<X size={20}/>:<Menu size={20}/>}</button></div>{open&&<nav id="mobile-nav" className="public-mobile-menu" aria-label="Mobile navigation"><Link to="/">Home</Link><Link to="/jobs">Browse jobs</Link><Link to="/about">About us</Link>{user?<ButtonLink to={`/${user.role}/dashboard`}>My workspace</ButtonLink>:<><Link to="/login">Log in</Link><ButtonLink to="/register">Get started</ButtonLink></>}</nav>}</header><main id="main-content"><Outlet/></main><footer className="footer"><div className="container"><div className="footer-top"><div><Logo/><p>A little direction. A world of possibility.<br/>Your career journey, all in one place.</p></div><div className="footer-links"><strong>For talent</strong><Link to="/jobs">Browse opportunities</Link><Link to="/register?role=student">Create your profile</Link><Link to="/student/applications">Track applications</Link></div><div className="footer-links"><strong>For employers</strong><Link to="/register?role=provider">Find your next hire</Link><Link to="/provider/jobs/new">Post an opportunity</Link><Link to="/provider/dashboard">Employer workspace</Link></div><div className="footer-links"><strong>InternTrack</strong><Link to="/about">Our story</Link><Link to="/login">Explore the demo</Link><a href="mailto:hello@interntrack.demo">Contact us</a></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} InternTrack. Made for your next chapter.</span><span>Portfolio demo · Opportunities and company listings are illustrative.</span></div></div></footer></>;}
+import { useEffect, useState } from "react";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { ArrowUpRight, Menu, Route, X } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { ButtonLink } from "../components/common/UI";
+export function Logo() {
+  return (
+    <Link to="/" className="logo" aria-label="InternTrack home">
+      <span className="logo-icon">
+        <Route size={20} />
+      </span>
+      InternTrack<span className="logo-dot">.</span>
+    </Link>
+  );
+}
+export default function PublicLayout() {
+  const [open, setOpen] = useState(false);
+  const { user } = useAuth();
+  const { pathname } = useLocation();
+  useEffect(() => setOpen(false), [pathname]);
+  return (
+    <>
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
+      <header className="public-header">
+        <div className="container public-nav">
+          <Logo />
+          <nav className="nav-links" aria-label="Main navigation">
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/jobs">Browse jobs</NavLink>
+            <NavLink to="/about">About us</NavLink>
+          </nav>
+          <div className="nav-actions">
+            {user ? (
+              <ButtonLink to={`/${user.role}/dashboard`}>
+                My workspace <ArrowUpRight size={15} />
+              </ButtonLink>
+            ) : (
+              <>
+                <Link className="btn btn-ghost" to="/login">
+                  Log in
+                </Link>
+                <ButtonLink to="/register">
+                  Get started <ArrowUpRight size={15} />
+                </ButtonLink>
+              </>
+            )}
+          </div>
+          <button
+            className="icon-btn mobile-toggle"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+        {open && (
+          <nav
+            id="mobile-nav"
+            className="public-mobile-menu"
+            aria-label="Mobile navigation"
+          >
+            <Link to="/">Home</Link>
+            <Link to="/jobs">Browse jobs</Link>
+            <Link to="/about">About us</Link>
+            {user ? (
+              <ButtonLink to={`/${user.role}/dashboard`}>
+                My workspace
+              </ButtonLink>
+            ) : (
+              <>
+                <Link to="/login">Log in</Link>
+                <ButtonLink to="/register">Get started</ButtonLink>
+              </>
+            )}
+          </nav>
+        )}
+      </header>
+      <main id="main-content">
+        <Outlet />
+      </main>
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-top">
+            <div>
+              <Logo />
+              <p>
+                A little direction. A world of possibility.
+                <br />
+                Your career journey, all in one place.
+              </p>
+            </div>
+            <div className="footer-links">
+              <strong>For talent</strong>
+              <Link to="/jobs">Browse opportunities</Link>
+              <Link to="/register?role=student">Create your profile</Link>
+              <Link to="/student/applications">Track applications</Link>
+            </div>
+            <div className="footer-links">
+              <strong>For employers</strong>
+              <Link to="/register?role=provider">Find your next hire</Link>
+              <Link to="/provider/jobs/new">Post an opportunity</Link>
+              <Link to="/provider/dashboard">Employer workspace</Link>
+            </div>
+            <div className="footer-links">
+              <strong>InternTrack</strong>
+              <Link to="/about">Our story</Link>
+              <Link to="/login">Explore the demo</Link>
+              <a href="mailto:hello@interntrack.demo">Contact us</a>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <span>
+              © {new Date().getFullYear()} InternTrack. Made for your next
+              chapter.
+            </span>
+            <span>
+              Portfolio demo · Opportunities and company listings are
+              illustrative.
+            </span>
+          </div>
+        </div>
+      </footer>
+    </>
+  );
+}
