@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.js';
 import { useData } from '../../context/DataContext.js';
 import { Button, Card, Input, Modal, PageHeader } from '../../components/common/UI.js';
-import { mutate, uid } from '../../services/mockStore.js';
+import { followupService } from '../../services/followupService.js';
 import { useAction } from '../../hooks/useAction.js';
 export default function Calendar() {
   const { user } = useAuth();
@@ -19,7 +19,7 @@ export default function Calendar() {
     `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   const events = [
     ...data.interviews
-      .filter((i) => i.userId === user.id)
+      .filter((i) => i.userId === user.id && i.status !== 'Cancelled')
       .map((i) => ({
         date: i.date,
         title: `${i.time} · ${data.jobs.find((j) => j.id === i.jobId)?.title || 'Interview'}`,
@@ -176,14 +176,7 @@ export default function Calendar() {
             e.preventDefault();
             const values = Object.fromEntries(new FormData(e.currentTarget));
             const result = await run(
-              () =>
-                mutate((d) => {
-                  d.followups.push({
-                    ...values,
-                    id: uid('f'),
-                    userId: user.id,
-                  });
-                }),
+              () => followupService.create(values),
               'Follow-up added to your calendar',
             );
             if (result.ok) setOpen(false);
@@ -209,10 +202,7 @@ export default function Calendar() {
           style={{ marginTop: 20 }}
           onClick={async () => {
             const result = await run(
-              () =>
-                mutate((d) => {
-                  d.followups = d.followups.filter((f) => f.id !== selected.id);
-                }),
+              () => followupService.remove(selected.id),
               'Follow-up completed',
             );
             if (result.ok) setSelected(null);

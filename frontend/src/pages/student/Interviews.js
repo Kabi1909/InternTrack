@@ -7,15 +7,22 @@ import {
   Button,
   ButtonLink,
   Card,
+  ConfirmDialog,
   CompanyLogo,
   EmptyState,
   PageHeader,
 } from '../../components/common/UI.js';
+import InterviewModal from '../../components/applications/InterviewModal.js';
+import { interviewService } from '../../services/interviewService.js';
+import { useAction } from '../../hooks/useAction.js';
 import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge.js';
 import { calendarDownload, formatDate, safeUrl } from '../../utils/helpers.js';
 export default function Interviews() {
   const { user } = useAuth();
   const data = useData();
+  const [editing, setEditing] = useState(null);
+  const [cancelling, setCancelling] = useState(null);
+  const { loading, run } = useAction();
   const [tab, setTab] = useState('Upcoming');
   const provider = user.role === 'provider';
   const interviews = data.interviews
@@ -27,7 +34,11 @@ export default function Interviews() {
     .map((i) => ({
       ...i,
       displayStatus:
-        new Date(i.date + 'T' + i.time) < new Date() ? 'Completed' : i.status,
+        i.status === 'Cancelled'
+          ? 'Cancelled'
+          : new Date(i.date + 'T' + i.time) < new Date()
+            ? 'Completed'
+            : i.status,
     }))
     .filter((i) => i.displayStatus === tab)
     .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
@@ -44,14 +55,18 @@ export default function Interviews() {
         }
       />
       <div className="segmented" style={{ marginBottom: 25 }}>
-        {['Upcoming', 'Completed'].map((t) => (
+        {['Upcoming', 'Completed', 'Cancelled'].map((t) => (
           <button
             key={t}
             className={tab === t ? 'active' : ''}
             aria-pressed={tab === t}
             onClick={() => setTab(t)}
           >
-            {t === 'Completed' ? 'Past interviews' : 'Upcoming interviews'}
+            {t === 'Completed'
+              ? 'Past interviews'
+              : t === 'Cancelled'
+                ? 'Cancelled interviews'
+                : 'Upcoming interviews'}
           </button>
         ))}
       </div>
@@ -91,12 +106,18 @@ export default function Interviews() {
                   </p>
                 )}
                 <p>{i.notes}</p>
-                {i.link && (
-                  <p className="banner-note">
-                    Demo meetings use a placeholder link. No live meeting is created.
-                  </p>
-                )}
+
                 <div className="form-actions">
+                  {provider && tab === 'Upcoming' && (
+                    <>
+                      <Button variant="secondary" onClick={() => setEditing(i)}>
+                        Reschedule
+                      </Button>
+                      <Button variant="ghost" onClick={() => setCancelling(i)}>
+                        Cancel interview
+                      </Button>
+                    </>
+                  )}
                   {tab === 'Upcoming' && safeUrl(i.link) && (
                     <a
                       className="btn btn-primary"
@@ -149,6 +170,31 @@ export default function Interviews() {
           }
         />
       )}
+      {editing && (
+        <InterviewModal
+          key={editing.id}
+          open
+          onClose={() => setEditing(null)}
+          interview={editing}
+          application={data.applications.find(
+            (item) => item.id === editing.applicationId,
+          )}
+        />
+      )}
+      <ConfirmDialog
+        open={!!cancelling}
+        onClose={() => setCancelling(null)}
+        title="Cancel this interview?"
+        description="The candidate will receive a cancellation notification."
+        loading={loading}
+        onConfirm={async () => {
+          const result = await run(
+            () => interviewService.cancel(cancelling.id),
+            'Interview cancelled',
+          );
+          if (result.ok) setCancelling(null);
+        }}
+      />
     </>
   );
 }

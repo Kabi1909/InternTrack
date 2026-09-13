@@ -3,9 +3,9 @@ import { Button, Input, Modal, Select, Textarea } from '../common/UI.js';
 import { useData } from '../../context/DataContext.js';
 import { interviewService } from '../../services/interviewService.js';
 import { useAction } from '../../hooks/useAction.js';
-export default function InterviewModal({ open, onClose, application }) {
+export default function InterviewModal({ open, onClose, application, interview }) {
   const data = useData();
-  const [type, setType] = useState('Video call');
+  const [type, setType] = useState(interview?.type || 'Video call');
   const [error, setError] = useState('');
   const { loading, run } = useAction();
   if (!application) return null;
@@ -22,15 +22,20 @@ export default function InterviewModal({ open, onClose, application }) {
       () =>
         interviewService.save({
           ...values,
+          id: interview?.id,
           type,
           applicationId: application.id,
         }),
-      'Interview scheduled. The candidate has been notified.',
+      'Interview saved. The candidate has been notified.',
     );
     if (result.ok) onClose();
   };
   return (
-    <Modal open={open} onClose={onClose} title="Start a conversation">
+    <Modal
+      open={open}
+      onClose={onClose}
+      title={interview ? 'Reschedule interview' : 'Start a conversation'}
+    >
       <p className="note-box" style={{ marginBottom: 20 }}>
         <strong>{candidate?.name}</strong>
         <br />
@@ -41,11 +46,18 @@ export default function InterviewModal({ open, onClose, application }) {
           <Input
             label="Interview date"
             name="date"
+            defaultValue={interview?.date}
             type="date"
             min={new Date().toISOString().slice(0, 10)}
             required
           />
-          <Input label="Time (your local timezone)" name="time" type="time" required />
+          <Input
+            label="Time (your local timezone)"
+            name="time"
+            defaultValue={interview?.time}
+            type="time"
+            required
+          />
         </div>
         <Select
           label="Interview type"
@@ -60,6 +72,7 @@ export default function InterviewModal({ open, onClose, application }) {
           <Input
             label="Meeting link"
             name="link"
+            defaultValue={interview?.link}
             type="url"
             placeholder="https://meet.google.com/…"
             required
@@ -69,6 +82,7 @@ export default function InterviewModal({ open, onClose, application }) {
           <Input
             label="Physical location"
             name="location"
+            defaultValue={interview?.location}
             placeholder="Office address, floor, and room"
             required
           />
@@ -77,6 +91,7 @@ export default function InterviewModal({ open, onClose, application }) {
           <Input
             label="Phone number"
             name="location"
+            defaultValue={interview?.location}
             type="tel"
             placeholder="Include country code"
             required
@@ -85,6 +100,7 @@ export default function InterviewModal({ open, onClose, application }) {
         <Textarea
           label="Notes for the candidate"
           name="notes"
+          defaultValue={interview?.notes}
           placeholder="Who they’ll meet, what to prepare, and anything else to know…"
         />
         {error && (
@@ -97,7 +113,7 @@ export default function InterviewModal({ open, onClose, application }) {
             Cancel
           </Button>
           <Button loading={loading} type="submit">
-            Schedule interview
+            {interview ? 'Save interview' : 'Schedule interview'}
           </Button>
         </div>
       </form>

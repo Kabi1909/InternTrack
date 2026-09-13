@@ -2,6 +2,8 @@ import { Bell, Check, Video, FileText, Clock3, Users } from 'lucide-react';
 import { formatDate } from '../../utils/helpers.js';
 const icons = {
   'Interview scheduled': Video,
+  'Interview rescheduled': Video,
+  'Interview cancelled': Video,
   'Application submitted': FileText,
   'Deadline approaching': Clock3,
   'Job closing soon': Clock3,

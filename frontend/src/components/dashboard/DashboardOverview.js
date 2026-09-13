@@ -44,31 +44,23 @@ export default function DashboardOverview({ provider = false }) {
       i.status === 'Upcoming' &&
       new Date(i.date + 'T' + i.time) >= new Date(),
   );
-  const count = (status) => applications.filter((a) => a.status === status).length;
+  const analytics = data.analytics || {};
   const stats = provider
     ? [
-        [
-          'Total Vacancies',
-          jobs.filter((job) => job.status !== 'Deleted').length,
-          BriefcaseBusiness,
-        ],
-        [
-          'Active Vacancies',
-          jobs.filter((j) => j.status === 'Active').length,
-          CheckCircle2,
-        ],
-        ['Total Applicants', applications.length, Users],
-        ['Shortlisted', count('Shortlisted'), FileText],
-        ['Interviews Scheduled', count('Interview Scheduled'), Video],
-        ['Offers Made', count('Offered'), Trophy],
+        ['Total Vacancies', analytics.totalVacancies || 0, BriefcaseBusiness],
+        ['Active Vacancies', analytics.activeVacancies || 0, CheckCircle2],
+        ['Total Applicants', analytics.totalApplicants || 0, Users],
+        ['Shortlisted', analytics.shortlistedCandidates || 0, FileText],
+        ['Interviews Scheduled', analytics.interviewsScheduled || 0, Video],
+        ['Offers Made', analytics.offersMade || 0, Trophy],
       ]
     : [
-        ['Total Applications', applications.length, FileText],
-        ['Under Review', count('Under Review'), Clock3],
-        ['Interviews', count('Interview Scheduled'), Video],
-        ['Offers', count('Offered'), Trophy],
-        ['Rejections', count('Rejected'), XCircle],
-        ['Saved Jobs', (data.saved[user.id] || []).length, Bookmark],
+        ['Total Applications', analytics.totalApplications || 0, FileText],
+        ['Under Review', analytics.underReview || 0, Clock3],
+        ['Interviews', analytics.interviews || 0, Video],
+        ['Offers', analytics.offers || 0, Trophy],
+        ['Rejections', analytics.rejections || 0, XCircle],
+        ['Saved Jobs', analytics.savedJobs || 0, Bookmark],
       ];
   const recommended = data.jobs
     .filter((j) => j.status === 'Active' && !applications.some((a) => a.jobId === j.id))
@@ -110,7 +102,12 @@ export default function DashboardOverview({ provider = false }) {
           />
         ))}
       </div>
-      <Analytics applications={applications} jobs={jobs} provider={provider} />
+      <Analytics
+        applications={applications}
+        jobs={jobs}
+        provider={provider}
+        analytics={analytics}
+      />
       <div className="dashboard-grid">
         <div>
           <SectionHeader
@@ -141,7 +138,7 @@ export default function DashboardOverview({ provider = false }) {
                     <ArrowUpRight size={16} style={{ marginLeft: 'auto' }} />
                   </Link>
                 ))}
-              {!jobs.length && (
+              {!jobs.some((job) => job.status === 'Active') && (
                 <EmptyState
                   title="Your team’s next chapter"
                   description="Post your first opportunity to start meeting talent."

@@ -22,10 +22,15 @@ const colors = [
   '#d8a394',
   '#c9d0c0',
 ];
-export default function Analytics({ applications, jobs, provider = false }) {
-  const statusData = [...new Set(applications.map((a) => a.status))].map((name) => ({
-    name,
-    value: applications.filter((a) => a.status === name).length,
+export default function Analytics({
+  applications,
+  jobs,
+  provider = false,
+  analytics = {},
+}) {
+  const statusData = (analytics.applicationsByStatus || []).map((row) => ({
+    name: row.status,
+    value: row.count,
   }));
   const activity = Array.from({ length: 6 }, (_, index) => {
     const start = new Date();
@@ -43,9 +48,9 @@ export default function Analytics({ applications, jobs, provider = false }) {
       ).length,
     };
   });
-  const vacancyData = jobs.map((j) => ({
-    name: j.title.replace(' Intern', '').slice(0, 18),
-    applications: applications.filter((a) => a.jobId === j.id).length,
+  const vacancyData = (analytics.applicantsByJob || []).map((row) => ({
+    name: row.title.slice(0, 18),
+    applications: row.count,
   }));
   return (
     <div className="charts-grid">
