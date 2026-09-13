@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SlidersHorizontal, MapPin } from 'lucide-react';
 import { useData } from '../../context/DataContext.js';
-import { jobService } from '../../services/jobService.js';
 import {
   Button,
   EmptyState,
@@ -48,8 +47,8 @@ export default function BrowseJobs() {
   const load = () => {
     setLoading(true);
     setError('');
-    jobService
-      .list()
+    data
+      .reload()
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   };

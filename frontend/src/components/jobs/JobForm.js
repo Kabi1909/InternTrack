@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Input, Select, SkillTags, Textarea } from '../common/UI.js';
-import { categories } from '../../data/mockData.js';
+import { categories } from '../../data/options.js';
 import { jobService } from '../../services/jobService.js';
 import { useAction } from '../../hooks/useAction.js';
 export default function JobForm({ job, company }) {

@@ -1,4 +1,4 @@
-import { categories } from '../../data/mockData.js';
+import { categories } from '../../data/options.js';
 import { Input, Select } from '../common/UI.js';
 export default function FilterPanel({ filters, onChange, onClear }) {
   const toggle = (key, value) =>

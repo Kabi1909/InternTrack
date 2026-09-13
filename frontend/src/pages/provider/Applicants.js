@@ -18,7 +18,7 @@ import ApplicationStatusBadge from '../../components/applications/ApplicationSta
 import InterviewModal from '../../components/applications/InterviewModal.js';
 import { applicationService } from '../../services/applicationService.js';
 import { useAction } from '../../hooks/useAction.js';
-import { statuses } from '../../data/mockData.js';
+import { statuses } from '../../data/options.js';
 import { formatDate } from '../../utils/helpers.js';
 export default function Applicants() {
   const { id } = useParams();
@@ -184,7 +184,7 @@ export default function Applicants() {
         open={!!reject}
         onClose={() => setReject(null)}
         title="Reject this application?"
-        description="The candidate’s application status will change to Rejected and they’ll receive a demo notification."
+        description="The candidate’s application status will change to Rejected and they’ll receive a notification."
         loading={loading}
         onConfirm={async () => {
           const result = await run(

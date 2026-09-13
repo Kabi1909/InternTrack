@@ -14,7 +14,7 @@ import {
   Select,
 } from '../../components/common/UI.js';
 import ApplicationStatusBadge from '../../components/applications/ApplicationStatusBadge.js';
-import { statuses } from '../../data/mockData.js';
+import { statuses } from '../../data/options.js';
 import { formatDate } from '../../utils/helpers.js';
 export default function Applications() {
   const data = useData();
