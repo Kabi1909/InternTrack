@@ -1,0 +1,16 @@
+import { Router } from 'express';
+import * as controller from '../controllers/providerController.js';
+import { upload } from '../controllers/uploadController.js';
+import { authenticate } from '../middleware/authMiddleware.js';
+import { authorize } from '../middleware/roleMiddleware.js';
+import { validate } from '../middleware/validateMiddleware.js';
+import { uploadFile } from '../middleware/uploadMiddleware.js';
+import * as rules from '../validators/index.js';
+const router = Router();
+router.use(authenticate, authorize('provider'));
+router.get('/profile', controller.getProfile);
+router.put('/profile', rules.providerProfile, validate, controller.updateProfile);
+router.post('/profile/logo', uploadFile, upload('image'));
+router.get('/analytics', controller.analytics);
+router.get('/dashboard', controller.dashboard);
+export default router;
