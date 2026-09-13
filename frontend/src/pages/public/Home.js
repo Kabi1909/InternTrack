@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 import { useData } from '../../context/DataContext.js';
 import {
-  Avatar,
+  EmptyState,
   Badge,
   Button,
   ButtonLink,
@@ -34,7 +34,7 @@ import {
   SectionHeader,
 } from '../../components/common/UI.js';
 import JobCard from '../../components/jobs/JobCard.js';
-import { categories } from '../../data/mockData.js';
+import { categories } from '../../data/options.js';
 const categoryIcons = [
   Code2,
   PenTool,
@@ -62,72 +62,70 @@ const workflows = {
   ],
 };
 function HeroArtwork() {
-  const { companies } = useData();
   return (
-    <div
-      className="hero-art"
-      aria-label="Preview: track applications, schedule interviews, and find matching roles"
-    >
+    <div className="hero-art" aria-label="Discover, apply, and track your career journey">
       <div className="orbit" />
       <div className="orbit inner" />
       <Sparkles className="hero-spark" size={32} strokeWidth={1.2} />
       <div className="floating-card application-preview">
         <div className="preview-header">
-          <CompanyLogo company={companies[0]} />
+          <BriefcaseBusiness size={28} />
           <div>
-            <strong>Frontend Developer Intern</strong>
-            <small>Linear · Colombo, Sri Lanka</small>
+            <strong>Your career, organized.</strong>
+            <small>One workspace for every next step</small>
           </div>
         </div>
         <div className="preview-label">YOUR APPLICATION JOURNEY</div>
         <div className="preview-track">
           <span>
-            <Check size={12} />
+            <Search size={12} />
+          </span>
+          <i />
+          <span>
+            <Send size={12} />
+          </span>
+          <i />
+          <span>
+            <Video size={12} />
           </span>
           <i />
           <span>
             <Check size={12} />
           </span>
-          <i />
-          <span>
-            <Video size={11} />
-          </span>
-          <i />
-          <span>·</span>
         </div>
         <div className="preview-track-labels">
-          <span>Applied</span>
-          <span>Reviewed</span>
+          <span>Discover</span>
+          <span>Apply</span>
           <span>Interview</span>
-          <span>Offer</span>
+          <span>Grow</span>
         </div>
         <div className="preview-footer">
-          <span>You’re making moves ✨</span>
-          <Badge tone="green">Interview scheduled</Badge>
+          <span>Make your next move</span>
+          <Badge tone="green">Stay organized</Badge>
         </div>
       </div>
-      <div className="floating-logo">N</div>
+      <div className="floating-logo">
+        <GraduationCap size={30} />
+      </div>
       <div className="floating-card interview-preview">
         <div className="preview-header">
-          <span className="date-tile">
-            <small>Next</small>03
-          </span>
+          <CalendarDays size={30} />
           <div>
-            <strong>Your next big conversation</strong>
-            <small>Product Design Intern · Notion</small>
+            <strong>Room for your next conversation</strong>
+            <small>Interviews and follow-ups, together</small>
           </div>
         </div>
-        <p>10:00 AM – 11:00 AM · Google Meet</p>
+        <p>Your schedule. A little clearer.</p>
         <Badge tone="green">
-          <Video size={10} /> You’re all set
+          <Video size={10} /> Show up prepared
         </Badge>
       </div>
       <div className="floating-card match-preview">
         <div className="match-ring">
-          96<span style={{ fontSize: 11 }}>%</span>
+          <Check size={30} />
         </div>
         <p>A little more you.</p>
-        <small>Example skill match</small>
+        <small>Discover your direction</small>
       </div>
       <div className="art-caption">A clear path to your next chapter ↗</div>
     </div>
@@ -193,13 +191,7 @@ export default function Home() {
               <Link to="/jobs?mode=Remote">Remote</Link>
             </p>
             <div className="hero-proof">
-              <div className="avatar-stack">
-                {['Alex Morgan', 'Sam Fernando', 'Priya Perera', 'Jamie Taylor'].map(
-                  (n) => (
-                    <Avatar key={n} name={n} />
-                  ),
-                )}
-              </div>
+              <GraduationCap size={32} />
               <span>
                 A fresh start for <strong>ambitious people.</strong>
                 <br />
@@ -220,14 +212,11 @@ export default function Home() {
       </section>
       <section className="trusted">
         <div className="container">
-          <p>Explore demo opportunities inspired by teams that build what’s next</p>
+          <p>Built for ambitious people and forward-thinking teams</p>
           <div className="company-strip">
-            <span>◒ Linear</span>
-            <span>▣ Notion</span>
-            <span>≋ Spotify</span>
-            <span>F figma</span>
-            <span>stripe</span>
-            <span>WSO2</span>
+            <span>Discover opportunities</span>
+            <span>Track your progress</span>
+            <span>Build your future</span>
           </div>
         </div>
       </section>
@@ -236,11 +225,17 @@ export default function Home() {
           <SectionHeader
             eyebrow="A GOOD PLACE TO START"
             title="Small beginnings. Big possibilities."
-            description="Handpicked internships for your first meaningful career move."
+            description="Recently published internships for your first meaningful career move."
             to="/jobs"
             link="Explore all opportunities"
           />
           <div className="job-grid">
+            {!active.some((job) => job.type === 'Internship') && (
+              <EmptyState
+                title="New beginnings are on their way"
+                description="Internships will appear here when providers publish them."
+              />
+            )}
             {active
               .filter((j) => j.type === 'Internship')
               .slice(0, 3)
@@ -332,9 +327,15 @@ export default function Home() {
             link="See what’s new"
           />
           <div className="job-grid">
+            {!active.length && (
+              <EmptyState
+                title="No opportunities published yet"
+                description="Check back for new roles, or create a provider account to post an opportunity."
+              />
+            )}
             {[...active]
               .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-              .slice(3, 6)
+              .slice(0, 3)
               .map((job) => (
                 <JobCard key={job.id} job={job} />
               ))}

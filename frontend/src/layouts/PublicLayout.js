@@ -106,17 +106,14 @@ export default function PublicLayout() {
             <div className="footer-links">
               <strong>InternTrack</strong>
               <Link to="/about">Our story</Link>
-              <Link to="/login">Explore the demo</Link>
-              <a href="mailto:hello@interntrack.demo">Contact us</a>
+              <Link to="/login">Your workspace</Link>
             </div>
           </div>
           <div className="footer-bottom">
             <span>
               © {new Date().getFullYear()} InternTrack. Made for your next chapter.
             </span>
-            <span>
-              Portfolio demo · Opportunities and company listings are illustrative.
-            </span>
+            <span>Discover. Apply. Track. Grow.</span>
           </div>
         </div>
       </footer>

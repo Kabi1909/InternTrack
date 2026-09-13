@@ -89,8 +89,12 @@ export default function DashboardLayout({ role }) {
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
   }, []);
-  const signOut = () => {
-    logout();
+  const signOut = async () => {
+    try {
+      await logout();
+    } catch {
+      /* The local session is cleared even if the server is unavailable. */
+    }
     navigate('/');
   };
   return (
@@ -177,7 +181,9 @@ export default function DashboardLayout({ role }) {
             </div>
           </div>
           <div className="topbar-actions">
-            <span className="demo-indicator">DEMO WORKSPACE</span>
+            <button className="workspace-indicator" onClick={data.reload}>
+              Refresh workspace
+            </button>
             <Link
               to={`/${role}/notifications`}
               className="icon-btn notification-dot"

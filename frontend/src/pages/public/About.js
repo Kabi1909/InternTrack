@@ -48,12 +48,12 @@ export default function About() {
             Ready for what’s next.
           </h2>
           <p>
-            Explore this interactive frontend portfolio. All listings and profiles are
-            demo data.
+            Create your profile, discover opportunities, and keep your applications
+            organized.
           </p>
         </div>
-        <ButtonLink to="/login" variant="lime">
-          Try the demo
+        <ButtonLink to="/register" variant="lime">
+          Get started
         </ButtonLink>
       </div>
     </div>

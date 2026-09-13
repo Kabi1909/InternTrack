@@ -22,7 +22,7 @@ export function calendarDownload(interview, title) {
   const start = (interview.date + 'T' + interview.time + ':00').replace(/[-:]/g, '');
   downloadText(
     'interntrack-interview.ics',
-    `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//InternTrack//EN\r\nBEGIN:VEVENT\r\nUID:${interview.id}@interntrack.demo\r\nDTSTAMP:${new Date()
+    `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//InternTrack//EN\r\nBEGIN:VEVENT\r\nUID:${interview.id}@interntrack\r\nDTSTAMP:${new Date()
       .toISOString()
       .replace(/[-:]/g, '')
       .replace(

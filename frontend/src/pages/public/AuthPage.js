@@ -58,10 +58,6 @@ export default function AuthPage({ register = false }) {
     );
     if (result.ok) navigate(destination(result.result), { replace: true });
   };
-  const demo = async (role) => {
-    const result = await run(() => auth.demo(role), 'Your demo workspace is ready');
-    if (result.ok) navigate(destination(result.result));
-  };
   const strength = [
     password.length >= 8,
     /[A-Z]/.test(password),
@@ -218,39 +214,17 @@ export default function AuthPage({ register = false }) {
             <ArrowRight size={16} />
           </Button>
         </form>
-        <div className="demo-box">
-          <span>TAKE A LOOK AROUND — NO SIGN-UP NEEDED</span>
-          <div className="inline-row">
-            <Button variant="secondary" loading={loading} onClick={() => demo('student')}>
-              <GraduationCap size={16} />
-              Student demo
-            </Button>
-            <Button
-              variant="secondary"
-              loading={loading}
-              onClick={() => demo('provider')}
-            >
-              <Building2 size={16} />
-              Provider demo
-            </Button>
-          </div>
-        </div>
         <p className="auth-bottom">
           {register ? 'Already have an account?' : 'New to InternTrack?'}{' '}
           <Link to={register ? '/login' : '/register'}>
             {register ? 'Log in' : 'Create an account'}
           </Link>
         </p>
-        <p className="banner-note">
-          Demo only: no real credentials are stored. Use password Demo123! to return to
-          any demo account, including a newly registered profile.
-        </p>
       </div>
       <Modal open={forgot} onClose={() => setForgot(false)} title="Let’s get you back in">
         <p className="muted">
-          Password reset emails will be available when the backend is connected. For this
-          frontend demo, sign in with your demo email and <strong>Demo123!</strong>, or
-          use the quick demo buttons.
+          Self-service password reset is not available yet. Contact your InternTrack
+          administrator for account assistance.
         </p>
         <Button
           className="full-width"

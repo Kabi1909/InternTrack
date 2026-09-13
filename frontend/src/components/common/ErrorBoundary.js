@@ -14,8 +14,8 @@ export default class ErrorBoundary extends Component {
           <div className="empty-state">
             <h1>Let’s try that again.</h1>
             <p>
-              Something interrupted your workspace. Your saved demo data is still in this
-              browser.
+              Something interrupted your workspace. Reload the page to reconnect to your
+              workspace.
             </p>
             <button
               className="btn btn-primary"
