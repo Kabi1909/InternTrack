@@ -1,77 +1,22 @@
-# Source file inventory
+# Frontend source map
 
-All files below were added for the frontend implementation. Existing working application code was not present. The pre-existing deletion of Sample.txt was left outside the implementation commits.
+- `src/App.js`: public, student, and provider routes with lazy page imports.
+- `src/main.js`: router, authentication, data provider, and toast setup.
+- `src/components/common`: reusable controls, dialogs, cards, badges, avatars, loading/empty states, pagination, error boundary, and route guards.
+- `src/components/jobs`: opportunity cards, filters, and create/edit form.
+- `src/components/applications`: application form, status badges, timeline, authenticated CV download, interview form.
+- `src/components/dashboard`: statistic cards and API-backed analytics charts.
+- `src/components/profile`: validated file selection.
+- `src/components/notifications`: notification item.
+- `src/layouts`: public layout and separate student/provider dashboard shells.
+- `src/pages/public`: Home, About, AuthPage, BrowseJobs, JobDetails.
+- `src/pages/student`: Dashboard, Profile, Applications, ApplicationDetails, SavedJobs, Interviews, Calendar, Notifications.
+- `src/pages/provider`: Dashboard, Profile, Jobs, JobEditor, Applicants, CandidateDetails.
+- `src/context`: AuthContext and DataContext.
+- `src/services`: Axios, session, response normalizers, workspace loading, refresh helpers, authentication, jobs, applications, interviews, notifications, profiles, uploads, and follow-ups.
+- `src/data/options.js`: category/status vocabulary only.
+- `src/utils/helpers.js`: display dates, initials, safe URLs, and calendar exports.
+- `tests/services.test.js`: API mapping, empty-state, time conversion and pagination tests.
+- `src/styles.css`, `vite.config.js`: responsive styles, Tailwind, JSX-in-JS transform, API development proxy.
 
-## Application source
-
-- `src/App.js`
-- `src/components/applications/ApplicationModal.js`
-- `src/components/applications/ApplicationStatusBadge.js`
-- `src/components/applications/ApplicationTimeline.js`
-- `src/components/applications/CVPreview.js`
-- `src/components/applications/InterviewModal.js`
-- `src/components/common/ErrorBoundary.js`
-- `src/components/common/ProtectedRoute.js`
-- `src/components/common/UI.js`
-- `src/components/dashboard/Analytics.js`
-- `src/components/dashboard/DashboardOverview.js`
-- `src/components/dashboard/StatCard.js`
-- `src/components/jobs/FilterPanel.js`
-- `src/components/jobs/JobCard.js`
-- `src/components/jobs/JobForm.js`
-- `src/components/notifications/NotificationItem.js`
-- `src/components/profile/FileUpload.js`
-- `src/context/AuthContext.js`
-- `src/context/DataContext.js`
-- `src/data/mockData.js`
-- `src/hooks/useAction.js`
-- `src/hooks/useMediaQuery.js`
-- `src/layouts/DashboardLayout.js`
-- `src/layouts/ProviderDashboardLayout.js`
-- `src/layouts/PublicLayout.js`
-- `src/layouts/StudentDashboardLayout.js`
-- `src/main.js`
-- `src/pages/provider/Applicants.js`
-- `src/pages/provider/CandidateDetails.js`
-- `src/pages/provider/Dashboard.js`
-- `src/pages/provider/JobEditor.js`
-- `src/pages/provider/Jobs.js`
-- `src/pages/provider/Profile.js`
-- `src/pages/public/About.js`
-- `src/pages/public/AuthPage.js`
-- `src/pages/public/BrowseJobs.js`
-- `src/pages/public/Home.js`
-- `src/pages/public/JobDetails.js`
-- `src/pages/student/ApplicationDetails.js`
-- `src/pages/student/Applications.js`
-- `src/pages/student/Calendar.js`
-- `src/pages/student/Dashboard.js`
-- `src/pages/student/Interviews.js`
-- `src/pages/student/Notifications.js`
-- `src/pages/student/Profile.js`
-- `src/pages/student/SavedJobs.js`
-- `src/services/api.js`
-- `src/services/applicationService.js`
-- `src/services/authService.js`
-- `src/services/interviewService.js`
-- `src/services/jobService.js`
-- `src/services/mockStore.js`
-- `src/services/notificationService.js`
-- `src/services/profileService.js`
-- `src/styles.css`
-- `src/utils/helpers.js`
-
-## Tooling, verification, and documentation
-
-- `index.html`
-- `package.json`
-- `package-lock.json`
-- `vite.config.js`
-- `prettier.config.js`
-- `.prettierignore`
-- `.env.example`
-- `tests/services.test.js`
-- `README.md`
-- `BACKEND_INTEGRATION.md`
-- `VERIFICATION.md`
-- `FILES.md`
+The obsolete mockData.js and mockStore.js have been removed.

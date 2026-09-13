@@ -1,63 +1,25 @@
-# Future backend integration
+# Frontend/API integration
 
-No backend is implemented or started by this frontend.
+`services/api.js` configures Axios, the API base URL, Bearer authentication, error messages, and session expiry handling. `AuthContext` calls register/login/me/logout and retains the server-assigned identity and role. `DataContext` loads the real workspace and displays loading, retry and empty states.
 
-## Service boundary
+`workspaceService.js` fetches public opportunities and role-authorized applications, interviews, notifications, analytics, profile, and saved jobs/followups or own vacancies. It follows pagination beyond the first page. Populated application/job relationships supply candidate and archived-job context without exposing a global user directory.
 
-`src/services/api.js` exports an Axios instance with a 15-second timeout and a base URL from `VITE_API_BASE_URL`, falling back to `/api`. Copy `.env.example` to `.env` when configuring a future API. Changing the URL alone does not disable mock mode: replace the mock methods with endpoint requests as described below.
+`normalizers.js` translates API fields into the existing presentation model. User IDs remain authoritative; profile IDs never replace them. Upload URLs resolve against the configured API. UTC startsAt timestamps are displayed in the browser's local time.
 
-| Adapter                | Intended endpoints                                                                                    | Replace                                                        |
-| ---------------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| authService.js         | `POST /api/auth/login`, `POST /api/auth/register`, `GET /api/auth/me`, `POST /api/auth/logout`        | Demo login and browser session identifiers                     |
-| jobService.js          | `GET /api/jobs`, `GET /api/jobs/:id`, `POST /api/jobs`, `PATCH /api/jobs/:id`, `DELETE /api/jobs/:id` | Local filtering and vacancy mutations                          |
-| applicationService.js  | `GET /api/applications`, `POST /api/applications`, `PATCH /api/applications/:id`                      | Application submission, notes, status transitions, and history |
-| interviewService.js    | `GET /api/interviews`, `POST /api/interviews`                                                         | Interview creation, conflict checks, and persistence           |
-| notificationService.js | `GET /api/notifications`, `PATCH /api/notifications/:id/read`, `PATCH /api/notifications/read-all`    | Notification loading and read state                            |
-| profileService.js      | `GET /api/profile`, `PATCH /api/profile`, `GET /api/companies/:id`, `PATCH /api/companies/:id`        | Student and company profile persistence                        |
+Mutation services call the appropriate API and refresh auth/workspace state after success. Components never write business records to localStorage. `uploadService.js` converts the selected in-memory file into multipart data and downloads private CVs with the token. Static categories/status choices remain in data/options.js; they are not sample records.
 
-Suggested additional endpoints: saved jobs under `/api/users/me/saved-jobs`, follow-ups under `/api/followups`, and multipart uploads under `/api/uploads`.
+| Frontend action                | API                                                                      |
+| ------------------------------ | ------------------------------------------------------------------------ |
+| Sign in / register / restore   | /auth/login, /auth/register, /auth/me                                    |
+| Public jobs / own jobs         | /jobs, /jobs?mine=true                                                   |
+| Job editor / close / remove    | /jobs/:id, /jobs/:id/close                                               |
+| Saved jobs                     | /saved-jobs/:jobId                                                       |
+| Apply / tracking / notes       | /applications/*                                                          |
+| Student/company profile        | /users/me, /students/profile, /providers/profile                         |
+| Profile CV / picture / logo    | /students/profile/cv, /students/profile/picture, /providers/profile/logo |
+| Schedule / reschedule / cancel | /interviews, /interviews/:id, /interviews/:id/cancel                     |
+| Notifications                  | /notifications/*                                                         |
+| Analytics                      | /students/analytics, /providers/analytics                                |
+| Calendar follow-ups            | /students/followups/*                                                    |
 
-For example, a job adapter can preserve its existing interface:
-
-```js
-import api from './api.js';
-
-export const jobService = {
-  async list() {
-    const response = await api.get('/jobs');
-    return response.data;
-  },
-};
-```
-
-## State and data loading
-
-`DataContext` currently reads one browser-local demo snapshot and subscribes to `interntrack:change`. Replace this initial loading path with requests for the signed-in role and appropriate loading/error states. Refetch or update context after successful service calls. `BrowseJobs` currently uses `jobService.list()` for loading/error behavior and shared context for current data; migrate those together to avoid two sources of truth.
-
-The current model uses stable IDs linking users, companies, jobs, applications, interviews, and notifications. Normalize backend MongoDB `_id` values to `id` in adapters, or migrate all consumers consistently. Keep applicant details scoped to application IDs.
-
-## Authentication and authorization
-
-Replace demo buttons and the universal demo password with the real login/register/session flow. `ProtectedRoute` controls frontend navigation only; every backend endpoint must enforce authenticated identity, ownership, and role permissions independently. Provider-only notes must be omitted from student API responses. Replace demo registration password behavior with server-side password hashing and account recovery.
-
-Use your chosen secure session strategy. If the API uses cookies, configure credentials and CORS intentionally. Do not place secrets in Vite environment variables; they are included in browser bundles.
-
-## Uploads
-
-The demo stores small image/document data URLs in browser storage. Replace them with multipart uploads and server-issued file IDs or URLs. Store references on profiles and applications. Preserve the submitted CV reference on each application even when a user later changes their profile CV. Validate file type and size on the backend and control document access by ownership.
-
-## Workflow rules
-
-- Reject duplicate active applications per candidate and vacancy.
-- Validate vacancy deadlines and allowed state transitions server-side.
-- Retain application history when a vacancy is removed or archived.
-- Enforce access to personal and provider-private notes separately.
-- Use explicit timezones and server timestamps. The demo schedules in the viewer's local timezone and exports floating local times in `.ics` files.
-- Replace exact-time demo conflict checking with duration-aware scheduling rules.
-- Add pagination, search, and filters at the API level for larger datasets.
-- Generate notifications and send any emails from the backend. The current app does not send email or create real video calls.
-- Add a follow-up service adapter before moving the calendar's small local follow-up mutations to the backend.
-
-## Hosting
-
-Run `npm run build` and serve `frontend/dist`. React Router uses browser history, so the static host must rewrite non-asset routes to `index.html`. Configure this for the hosting provider you choose. A backend deployment is separate and outside this task.
+Current scaling tradeoff: the workspace adapter loads all authorized pages to preserve existing client-side filters and tables. For large datasets, move each page to server-side pagination and filtered queries. The backend already supports these query parameters. Updates from another session appear after Refresh workspace or reloading; real-time delivery is not implemented. Password recovery and outbound email are not implemented.
