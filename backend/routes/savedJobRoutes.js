@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import * as controller from '../controllers/savedJobController.js';
+import { authenticate } from '../middleware/authMiddleware.js';
+import { authorize } from '../middleware/roleMiddleware.js';
+import { validate } from '../middleware/validateMiddleware.js';
+import { id, paging } from '../validators/index.js';
+const router = Router();
+router.use(authenticate, authorize('student'));
+router.get('/', paging, validate, controller.getSaved);
+router.post('/:jobId', id('jobId'), validate, controller.save);
+router.delete('/:jobId', id('jobId'), validate, controller.unsave);
+export default router;
