@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import * as controller from '../controllers/notificationController.js';
+import { authenticate } from '../middleware/authMiddleware.js';
+import { validate } from '../middleware/validateMiddleware.js';
+import { id, paging } from '../validators/index.js';
+const router = Router();
+router.use(authenticate);
+router.get('/', paging, validate, controller.getNotifications);
+router.patch('/read-all', controller.markAll);
+router.patch('/:id/read', id('id'), validate, controller.markRead);
+router.delete('/:id', id('id'), validate, controller.remove);
+export default router;
