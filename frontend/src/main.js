@@ -9,8 +9,8 @@ import './styles.css';
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <DataProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <DataProvider>
           <App />
           <Toaster
             position="bottom-right"
@@ -19,8 +19,8 @@ createRoot(document.getElementById('root')).render(
               duration: 3500,
             }}
           />
-        </AuthProvider>
-      </DataProvider>
+        </DataProvider>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,
 );
