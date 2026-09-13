@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import * as controller from '../controllers/userController.js';
+import { authenticate } from '../middleware/authMiddleware.js';
+import { validate } from '../middleware/validateMiddleware.js';
+import { userProfile } from '../validators/index.js';
+const router = Router();
+router.use(authenticate);
+router.get('/me', controller.getMe);
+router.put('/me', userProfile, validate, controller.updateMe);
+export default router;
