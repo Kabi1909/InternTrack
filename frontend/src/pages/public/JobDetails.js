@@ -57,7 +57,7 @@ export default function JobDetails() {
   const save = () =>
     user
       ? run(
-          () => jobService.toggleSaved(user.id, id),
+          () => jobService.toggleSaved(user.id, id, saved),
           saved ? 'Removed from saved jobs' : 'Opportunity saved',
         )
       : navigate('/login', { state: { from: `/jobs/${id}` } });
@@ -208,7 +208,6 @@ export default function JobDetails() {
               </Button>
             </>
           )}
-          <p className="banner-note">Illustrative opportunity · Frontend demo</p>
         </Card>
       </div>
       {user?.role === 'student' && (

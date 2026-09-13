@@ -4,13 +4,13 @@ import toast from 'react-hot-toast';
 import { Input } from '../common/UI.js';
 export async function readUpload(file, kind = 'document') {
   if (!file) return null;
-  const max = kind === 'image' ? 1 : 2;
+  const max = kind === 'image' ? 2 : 5;
   if (file.size > max * 1024 * 1024)
-    throw new Error(`Choose a file smaller than ${max} MB for this demo.`);
+    throw new Error(`Choose a file smaller than ${max} MB.`);
   if (kind === 'image' && !['image/png', 'image/jpeg', 'image/webp'].includes(file.type))
     throw new Error('Choose a PNG, JPEG, or WebP image.');
-  if (kind === 'document' && !/\.(pdf|doc|docx)$/i.test(file.name))
-    throw new Error('Choose a PDF or Word document.');
+  if (kind === 'document' && !/\.pdf$/i.test(file.name))
+    throw new Error('Choose a PDF document.');
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve({ name: file.name, data: reader.result });
@@ -32,13 +32,13 @@ export default function FileUpload({
         {value?.name ||
           value ||
           (kind === 'image'
-            ? 'PNG, JPG or WebP, up to 1 MB'
-            : 'PDF or Word document, up to 2 MB')}
+            ? 'PNG, JPG or WebP, up to 2 MB'
+            : 'PDF document, up to 5 MB')}
       </p>
       <Input
         label={busy ? 'Reading file…' : label}
         type="file"
-        accept={kind === 'image' ? '.png,.jpg,.jpeg,.webp' : '.pdf,.doc,.docx'}
+        accept={kind === 'image' ? '.png,.jpg,.jpeg,.webp' : '.pdf'}
         disabled={busy}
         onChange={async (e) => {
           const file = e.target.files[0];

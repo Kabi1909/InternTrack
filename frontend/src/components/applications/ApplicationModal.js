@@ -25,6 +25,7 @@ export default function ApplicationModal({ open, onClose, job, onSuccess }) {
           jobId: job.id,
           cv: selected.name,
           cvData: selected.data,
+          cvUpload: source === 'profile' ? user.cvUpload : undefined,
           coverLetter: form.get('coverLetter'),
         }),
       'Application submitted. You’ve taken the first step!',
@@ -62,8 +63,7 @@ export default function ApplicationModal({ open, onClose, job, onSuccess }) {
           </p>
         )}
         <p className="banner-note">
-          This is a demo submission, saved in your browser. Nothing is sent to a real
-          employer.
+          Your CV and cover letter will be shared with the provider for this opportunity.
         </p>
         <div className="form-actions">
           <Button variant="secondary" type="button" onClick={onClose}>

@@ -1,73 +1,39 @@
-import { readStore, delay, mutate, uid, notify } from './mockStore.js';
+import api from './api.js';
+import { mutateRequest } from './serviceUtils.js';
+import { uploadDataUrl } from './uploadService.js';
+import { normalizeApplication } from './normalizers.js';
 export const applicationService = {
-  list: () => delay(readStore().applications),
-  apply: (values) =>
-    mutate((data) => {
-      if (
-        data.applications.some(
-          (a) =>
-            a.userId === values.userId &&
-            a.jobId === values.jobId &&
-            a.status !== 'Withdrawn',
-        )
-      )
-        throw new Error('You have already applied to this opportunity.');
-      const job = data.jobs.find((j) => j.id === values.jobId);
-      if (
-        !job ||
-        job.status !== 'Active' ||
-        job.deadline < new Date().toISOString().slice(0, 10)
-      )
-        throw new Error('This opportunity is no longer accepting applications.');
-      const now = new Date().toISOString();
-      const application = {
-        ...values,
-        id: uid('a'),
-        status: 'Applied',
-        appliedAt: now,
-        updatedAt: now,
-        history: [{ status: 'Applied', date: now }],
-        notes: '',
-        privateNotes: '',
-      };
-      data.applications.unshift(application);
-      notify(
-        data,
-        values.userId,
-        'Application sent',
-        `Your application for ${job.title} has been submitted.`,
-        'Application submitted',
+  apply: async (values) => {
+    let cvUpload = values.cvUpload;
+    if (values.cvData?.startsWith('data:'))
+      cvUpload = (await uploadDataUrl('/students/profile/cv', values.cvData, values.cv))
+        .id;
+    const application = await mutateRequest(
+      api.post(`/applications/${values.jobId}`, {
+        coverLetter: values.coverLetter,
+        ...(cvUpload ? { cvUpload } : {}),
+      }),
+    );
+    return normalizeApplication(application);
+  },
+  update: async (id, changes) => {
+    let result;
+    if (changes.status)
+      result = await mutateRequest(
+        changes.status === 'Withdrawn'
+          ? api.patch(`/applications/${id}/withdraw`)
+          : api.patch(`/applications/${id}/status`, { status: changes.status }),
       );
-      const owner = data.users.find((u) => u.companyId === job.companyId);
-      if (owner)
-        notify(
-          data,
-          owner.id,
-          'A new candidate has applied',
-          `${data.users.find((u) => u.id === values.userId)?.name} applied for ${job.title}.`,
-          'New applicant received',
-        );
-      return application;
-    }),
-  update: (id, changes) =>
-    mutate((data) => {
-      const app = data.applications.find((a) => a.id === id);
-      if (!app) throw new Error('Application not found.');
-      if (changes.status === app.status) return app;
-      if (changes.status && app.status === 'Withdrawn')
-        throw new Error('A withdrawn application cannot be updated.');
-      Object.assign(app, changes);
-      if (changes.status) app.updatedAt = new Date().toISOString();
-      if (changes.status) {
-        app.history.push({ status: changes.status, date: app.updatedAt });
-        notify(
-          data,
-          app.userId,
-          'Your application has an update',
-          `Your application is now ${changes.status.toLowerCase()}.`,
-          'Application status changed',
-        );
-      }
-      return app;
-    }),
+    if ('notes' in changes)
+      result = await mutateRequest(
+        api.patch(`/applications/${id}/notes`, { personalNotes: changes.notes }),
+      );
+    if ('privateNotes' in changes)
+      result = await mutateRequest(
+        api.patch(`/applications/${id}/provider-notes`, {
+          providerNotes: changes.privateNotes,
+        }),
+      );
+    return normalizeApplication(result);
+  },
 };

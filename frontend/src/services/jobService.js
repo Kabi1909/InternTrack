@@ -1,51 +1,40 @@
-import { readStore, delay, mutate, uid } from './mockStore.js';
-
+import api from './api.js';
+import { mutateRequest } from './serviceUtils.js';
+import { normalizeJob } from './normalizers.js';
+export function jobPayload(job) {
+  return {
+    title: job.title,
+    description: job.description,
+    responsibilities: job.responsibilities,
+    qualifications: job.qualifications,
+    requiredSkills: job.skills,
+    jobType: job.type,
+    workMode: job.mode,
+    location: job.location,
+    salaryText: job.salary,
+    applicationDeadline: job.deadline,
+    numberOfPositions: Number(job.positions),
+    experienceRequirements: job.experience,
+    category: job.category,
+    status: job.status,
+  };
+}
 export const jobService = {
-  list: () => delay(readStore().jobs.filter((job) => job.status !== 'Deleted')),
-
-  save: (job) =>
-    mutate((data) => {
-      if (!job.title?.trim() || !job.companyId || !job.skills?.length) {
-        throw new Error('Add a title, company, and at least one skill.');
-      }
-      if (!Number.isInteger(Number(job.positions)) || Number(job.positions) < 1) {
-        throw new Error('The number of positions must be a positive whole number.');
-      }
-      const found = data.jobs.findIndex((item) => item.id === job.id);
-      const result = {
-        ...job,
-        title: job.title.trim(),
-        id: job.id || uid('j'),
-        createdAt: job.createdAt || new Date().toISOString().slice(0, 10),
-      };
-      if (found >= 0) data.jobs[found] = result;
-      else data.jobs.unshift(result);
-      return result;
-    }),
-
-  close: (id) =>
-    mutate((data) => {
-      const job = data.jobs.find((item) => item.id === id);
-      if (!job) throw new Error('This vacancy is no longer available.');
-      job.status = 'Closed';
-    }),
-
-  remove: (id) =>
-    mutate((data) => {
-      // Retain the record so submitted applications keep their job and company context.
-      const job = data.jobs.find((item) => item.id === id);
-      if (!job) throw new Error('This vacancy is no longer available.');
-      job.status = 'Deleted';
-      Object.keys(data.saved).forEach((userId) => {
-        data.saved[userId] = data.saved[userId].filter((jobId) => jobId !== id);
-      });
-    }),
-
-  toggleSaved: (userId, jobId) =>
-    mutate((data) => {
-      const saved = data.saved[userId] || [];
-      data.saved[userId] = saved.includes(jobId)
-        ? saved.filter((id) => id !== jobId)
-        : [...saved, jobId];
-    }),
+  list: async (params) => (await api.get('/jobs', { params })).data,
+  save: async (job) =>
+    normalizeJob(
+      await mutateRequest(
+        job.id
+          ? api.put(`/jobs/${job.id}`, jobPayload(job))
+          : api.post('/jobs', jobPayload(job)),
+      ),
+    ),
+  close: (id) => mutateRequest(api.patch(`/jobs/${id}/close`)),
+  remove: (id) => mutateRequest(api.delete(`/jobs/${id}`)),
+  toggleSaved: (userId, jobId, currentlySaved = false) =>
+    mutateRequest(
+      currentlySaved
+        ? api.delete(`/saved-jobs/${jobId}`)
+        : api.post(`/saved-jobs/${jobId}`),
+    ),
 };

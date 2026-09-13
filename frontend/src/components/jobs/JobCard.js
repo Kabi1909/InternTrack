@@ -10,14 +10,14 @@ export default function JobCard({ job, compact = false }) {
   const { user } = useAuth();
   const data = useData();
   const navigate = useNavigate();
-  const { run } = useAction();
+  const { run, loading } = useAction();
   const company = data.companies.find((c) => c.id === job.companyId);
   const saved = (data.saved[user?.id] || []).includes(job.id);
   const save = () => {
     if (!user) return navigate('/login');
     if (user.role !== 'student') return;
     run(
-      () => jobService.toggleSaved(user.id, job.id),
+      () => jobService.toggleSaved(user.id, job.id, saved),
       saved ? 'Removed from saved jobs' : 'Opportunity saved',
     );
   };
@@ -32,6 +32,7 @@ export default function JobCard({ job, compact = false }) {
             aria-label={`${saved ? 'Unsave' : 'Save'} ${job.title}`}
             aria-pressed={saved}
             onClick={save}
+            disabled={loading}
           >
             <Bookmark size={19} fill={saved ? 'currentColor' : 'none'} />
           </button>
