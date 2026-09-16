@@ -1428,12 +1428,13 @@ select:focus {
   position: fixed;
   inset: 0 auto 0 0;
   width: 235px;
-  background: #fff;
-  border-right: 1px solid var(--border);
+  background: var(--color-text-primary);
+  border-right: 1px solid #3f3f46;
   padding: 30px 18px;
   display: flex;
   flex-direction: column;
   z-index: 40;
+  color: #fafafa;
 }
 .sidebar .logo {
   padding-left: 12px;
@@ -1443,7 +1444,7 @@ select:focus {
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 1.8px;
-  color: var(--color-text-secondary);
+  color: #d4d4d8;
 }
 .sidebar-nav {
   display: flex;
@@ -1458,31 +1459,33 @@ select:focus {
   padding: 12px 15px;
   border-radius: 7px;
   font-size: 12px;
-  color: var(--color-text-secondary);
+  color: #d4d4d8;
 }
 .sidebar-nav a.active {
-  background: var(--color-surface);
+  background: var(--color-secondary);
   color: var(--color-primary);
   font-weight: 600;
 }
 .sidebar-nav a:hover {
-  background: var(--color-surface);
+  background: #3b2b50;
+  color: #fafafa;
 }
 .sidebar-count {
   margin-left: auto;
-  background: var(--color-surface);
+  background: var(--color-secondary);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 9px;
+  color: var(--color-primary);
 }
 .sidebar-bottom {
   margin-top: auto;
   padding-top: 35px;
 }
 .sidebar-note {
-  background: var(--color-surface);
+  background: #332d40;
   padding: 17px;
-  border: 1px solid var(--color-border);
+  border: 1px solid #51445f;
   border-radius: 10px;
   margin-bottom: 16px;
 }
@@ -1493,13 +1496,13 @@ select:focus {
 }
 .sidebar-note p {
   font-size: 10px;
-  color: var(--color-text-secondary);
+  color: #d4d4d8;
 }
 .sidebar-user {
   display: flex;
   align-items: center;
   gap: 10px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid #52525b;
   padding: 18px 8px 0;
 }
 .sidebar-user strong {
@@ -1508,7 +1511,7 @@ select:focus {
 }
 .sidebar-user small {
   font-size: 10px;
-  color: var(--color-text-secondary);
+  color: #d4d4d8;
 }
 .dashboard-main {
   width: calc(100% - 235px);
@@ -2215,6 +2218,9 @@ select:focus {
   }
   .sidebar {
     width: 215px;
+    background: var(--color-text-primary);
+    color: #fafafa;
+    border-right: 1px solid #3f3f46;
   }
   .dashboard-main {
     margin-left: 215px;
@@ -2301,6 +2307,9 @@ select:focus {
   .sidebar {
     transform: translateX(-100%);
     transition: transform 0.2s;
+    background: var(--color-text-primary);
+    color: #fafafa;
+    border-right: 1px solid #3f3f46;
   }
   .sidebar.open {
     transform: translateX(0);
@@ -2813,6 +2822,9 @@ select:focus {
 }
 .sidebar {
   overflow-y: auto;
+  background: var(--color-text-primary);
+  color: #fafafa;
+  border-right: 1px solid #3f3f46;
 }
 .company-logo {
   object-fit: cover;
@@ -2849,7 +2861,7 @@ select:focus {
 }
 .sidebar-nav a,
 .sidebar-logout {
-  color: var(--color-text-secondary);
+  color: #d4d4d8;
 }
 .dashboard-grid > *,
 .profile-layout > *,
@@ -2871,6 +2883,8 @@ select:focus {
 @media (max-height: 850px) {
   .sidebar-note {
     display: none;
+    background: #332d40;
+    border: 1px solid #51445f;
   }
   .sidebar-bottom {
     padding-top: 18px;
@@ -2931,4 +2945,19 @@ select:focus {
 .timeline-step.current:last-child span {
   background: #edf5e9;
   border-color: #a4c18c;
+}
+.sidebar-nav a.active:hover {
+  background: var(--color-secondary);
+  color: var(--color-primary-dark);
+}
+.sidebar-logout:hover {
+  background: #3b2b50;
+  color: #fafafa;
+}
+.sidebar .logo-dot,
+.sidebar-note > svg {
+  color: #c4b5fd;
+}
+.sidebar :focus-visible {
+  outline-color: #c4b5fd;
 }
