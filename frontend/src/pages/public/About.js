@@ -34,7 +34,7 @@ export default function About() {
           ],
         ].map(([Icon, title, text]) => (
           <Card key={title}>
-            <Icon size={28} color="#77945b" />
+            <Icon size={28} color="var(--color-primary)" />
             <h3>{title}</h3>
             <p>{text}</p>
           </Card>
@@ -52,7 +52,7 @@ export default function About() {
             organized.
           </p>
         </div>
-        <ButtonLink to="/register" variant="lime">
+        <ButtonLink to="/register" variant="primary">
           Get started
         </ButtonLink>
       </div>

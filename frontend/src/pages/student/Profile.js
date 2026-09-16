@@ -58,7 +58,7 @@ export default function StudentProfile() {
           <p>{values.degree || 'Your next chapter starts here'}</p>
           <p>{values.university}</p>
           <div style={{ marginTop: 25 }}>
-            <Badge tone="green">
+            <Badge tone="purple">
               <CheckCircle2 size={12} />
               {completion}% complete
             </Badge>

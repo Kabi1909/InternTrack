@@ -85,7 +85,7 @@ export default function JobDetails() {
               {job.location || company?.location} · {job.mode}
             </div>
             <div className="job-tags">
-              <Badge tone="green">{job.type}</Badge>
+              <Badge tone="purple">{job.type}</Badge>
               <Badge>{job.experience}</Badge>
               <Badge>{job.mode}</Badge>
               {closed && <Badge tone="red">Applications closed</Badge>}
@@ -116,7 +116,7 @@ export default function JobDetails() {
               <h2>Your toolkit</h2>
               <div className="job-tags">
                 {job.skills.map((skill) => (
-                  <Badge tone="green" key={skill}>
+                  <Badge tone="purple" key={skill}>
                     {skill}
                   </Badge>
                 ))}
@@ -154,7 +154,7 @@ export default function JobDetails() {
               [GraduationCap, 'Experience', job.experience],
             ].map(([Icon, label, value]) => (
               <div key={label}>
-                <Icon size={19} color="#8b9e79" />
+                <Icon size={19} color="var(--color-primary)" />
                 <div>
                   <small>{label}</small>
                   <strong>{value}</strong>

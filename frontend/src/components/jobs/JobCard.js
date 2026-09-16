@@ -48,7 +48,7 @@ export default function JobCard({ job, compact = false }) {
         {job.mode}
       </div>
       <div className="job-tags">
-        <Badge tone="green">{job.type}</Badge>
+        <Badge tone="purple">{job.type}</Badge>
         {job.skills.slice(0, 2).map((skill) => (
           <Badge key={skill}>{skill}</Badge>
         ))}

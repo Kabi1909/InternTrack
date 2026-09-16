@@ -101,7 +101,7 @@ function HeroArtwork() {
         </div>
         <div className="preview-footer">
           <span>Make your next move</span>
-          <Badge tone="green">Stay organized</Badge>
+          <Badge tone="purple">Stay organized</Badge>
         </div>
       </div>
       <div className="floating-logo">
@@ -116,7 +116,7 @@ function HeroArtwork() {
           </div>
         </div>
         <p>Your schedule. A little clearer.</p>
-        <Badge tone="green">
+        <Badge tone="purple">
           <Video size={10} /> Show up prepared
         </Badge>
       </div>
@@ -405,7 +405,7 @@ export default function Home() {
         <div className="container">
           <div className="cta-panel">
             <div>
-              <div className="eyebrow" style={{ color: '#b4cf91' }}>
+              <div className="eyebrow" style={{ color: 'var(--color-secondary)' }}>
                 THE NEXT CHAPTER IS YOURS
               </div>
               <h2>
@@ -416,7 +416,7 @@ export default function Home() {
               <p>Find your people. Find your purpose. Find your next opportunity.</p>
             </div>
             <div className="cta-actions">
-              <ButtonLink variant="lime" to="/register">
+              <ButtonLink variant="primary" to="/register">
                 Get started for free <ArrowUpRight size={15} />
               </ButtonLink>
               <ButtonLink variant="secondary" to="/jobs">
