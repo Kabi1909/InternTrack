@@ -2979,3 +2979,107 @@ select:focus {
 .public-mobile-menu a:not(.btn):hover {
   color: var(--color-primary);
 }
+
+/* Layered backgrounds add depth without obscuring content or intercepting input. */
+:root {
+  --background-page-glow:
+    radial-gradient(ellipse 65% 420px at 12% 0%, #ede4ff 0%, transparent 75%),
+    radial-gradient(ellipse 45% 340px at 100% 8%, #fef3df 0%, transparent 75%),
+    var(--color-background);
+  --background-lavender-glow:
+    radial-gradient(ellipse at 0% 0%, #e2d4ff 0%, transparent 65%),
+    linear-gradient(135deg, #f5f3ff, #faf9f6);
+}
+.public-header + #main-content,
+.dashboard-main {
+  background: var(--background-page-glow);
+}
+.hero {
+  background:
+    radial-gradient(
+      ellipse 65% 85% at 8% 25%,
+      #e4d5ff 0%,
+      #ede4ff80 48%,
+      transparent 78%
+    ),
+    radial-gradient(ellipse 50% 80% at 94% 42%, #ddd0fa 0%, transparent 75%),
+    radial-gradient(ellipse 50% 50% at 55% 100%, #fff1d7 0%, transparent 80%),
+    var(--color-background);
+  isolation: isolate;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(#6d28d918 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: linear-gradient(to right, transparent 35%, #000 100%);
+}
+.hero h1 em {
+  background-image: linear-gradient(
+    transparent 80%,
+    #d9c5ff 80%,
+    #d9c5ff 95%,
+    transparent 95%
+  );
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.orbit {
+  border-color: #c4b5fd;
+}
+.orbit.inner {
+  background: radial-gradient(circle at 30% 25%, #faf7ff, #ddccfa);
+  border-color: #d8c9f2;
+}
+.floating-card {
+  box-shadow: 0 18px 45px #5b21b612;
+}
+.section-tint {
+  background:
+    radial-gradient(ellipse at 90% 0%, #e9ddfb 0%, transparent 65%),
+    linear-gradient(135deg, #faf9f6, #f5f3ff);
+}
+.benefit-panel,
+.auth-story {
+  background: var(--background-lavender-glow);
+}
+.benefit-panel.provider {
+  background:
+    radial-gradient(ellipse at 100% 0%, #fae9c7 0%, transparent 65%),
+    linear-gradient(135deg, #faf9f6, #f5f3ff);
+}
+.auth-page {
+  background:
+    radial-gradient(ellipse at 100% 0%, #ede4ff 0%, transparent 55%),
+    var(--color-background);
+}
+.cta-panel {
+  background:
+    radial-gradient(ellipse at 95% 0%, #6d28d980 0%, transparent 65%),
+    radial-gradient(ellipse at 0% 100%, #5b21b660 0%, transparent 65%), #27272a;
+}
+.stat-card {
+  background: linear-gradient(135deg, #ffffff 60%, #f5f3ff);
+}
+.filter-panel {
+  background: #ffffff;
+}
+.footer {
+  background:
+    radial-gradient(ellipse at 0% 100%, #ede9fe 0%, transparent 65%),
+    var(--color-background);
+}
+@media (max-width: 600px) {
+  .hero {
+    background:
+      radial-gradient(ellipse 100% 65% at 0% 15%, #e4d5ff 0%, transparent 85%),
+      radial-gradient(ellipse 90% 50% at 100% 90%, #fff1d7 0%, transparent 85%),
+      var(--color-background);
+  }
+  .hero::before {
+    opacity: 0.5;
+  }
+}
