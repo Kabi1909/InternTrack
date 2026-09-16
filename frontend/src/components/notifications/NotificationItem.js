@@ -9,11 +9,18 @@ const icons = {
   'Job closing soon': Clock3,
   'New applicant received': Users,
 };
+const tones = {
+  'Application submitted': 'success',
+  'Deadline approaching': 'warning',
+  'Job closing soon': 'warning',
+};
 export default function NotificationItem({ notification, onRead }) {
   const Icon = icons[notification.type] || Bell;
   return (
     <article className={`notification-item ${notification.read ? '' : 'unread'}`}>
-      <span className="notification-icon">
+      <span
+        className={`notification-icon notification-${tones[notification.type] || 'info'}`}
+      >
         <Icon size={19} />
       </span>
       <div>

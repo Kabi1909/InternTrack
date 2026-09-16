@@ -1,10 +1,10 @@
 import { Badge } from '../common/UI.js';
 export default function ApplicationStatusBadge({ status }) {
   const tone = {
-    Applied: 'blue',
+    Applied: 'neutral',
     'Under Review': 'amber',
     Shortlisted: 'purple',
-    'Interview Scheduled': 'blue',
+    'Interview Scheduled': 'orange',
     Offered: 'green',
     Rejected: 'red',
     Withdrawn: 'neutral',
@@ -12,7 +12,7 @@ export default function ApplicationStatusBadge({ status }) {
     Closed: 'neutral',
     Expired: 'red',
     Draft: 'amber',
-    Upcoming: 'blue',
+    Upcoming: 'orange',
     Completed: 'green',
   };
   return <Badge tone={tone[status] || 'neutral'}>{status}</Badge>;

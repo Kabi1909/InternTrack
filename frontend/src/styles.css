@@ -2961,3 +2961,17 @@ select:focus {
 .sidebar :focus-visible {
   outline-color: #c4b5fd;
 }
+
+/* Status colors communicate meaning independently of the primary brand. */
+.badge-orange {
+  color: #9a3412;
+  background: #ffedd5;
+}
+.notification-success {
+  color: var(--color-success);
+  background: #edf5e9;
+}
+.notification-warning {
+  color: #92400e;
+  background: #fff5dc;
+}
