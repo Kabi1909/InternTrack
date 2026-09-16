@@ -2218,9 +2218,6 @@ select:focus {
   }
   .sidebar {
     width: 215px;
-    background: var(--color-text-primary);
-    color: #fafafa;
-    border-right: 1px solid #3f3f46;
   }
   .dashboard-main {
     margin-left: 215px;
@@ -2307,9 +2304,6 @@ select:focus {
   .sidebar {
     transform: translateX(-100%);
     transition: transform 0.2s;
-    background: var(--color-text-primary);
-    color: #fafafa;
-    border-right: 1px solid #3f3f46;
   }
   .sidebar.open {
     transform: translateX(0);
@@ -2822,9 +2816,6 @@ select:focus {
 }
 .sidebar {
   overflow-y: auto;
-  background: var(--color-text-primary);
-  color: #fafafa;
-  border-right: 1px solid #3f3f46;
 }
 .company-logo {
   object-fit: cover;
@@ -2883,8 +2874,6 @@ select:focus {
 @media (max-height: 850px) {
   .sidebar-note {
     display: none;
-    background: #332d40;
-    border: 1px solid #51445f;
   }
   .sidebar-bottom {
     padding-top: 18px;
@@ -2974,4 +2963,19 @@ select:focus {
 .notification-warning {
   color: #92400e;
   background: #fff5dc;
+}
+
+.loading .spin {
+  color: var(--color-primary);
+}
+.modal .form-actions .btn-secondary {
+  color: var(--color-text-secondary);
+}
+.modal .form-actions .btn-secondary:hover {
+  background: #f4f4f5;
+  color: var(--color-text-primary);
+}
+.public-mobile-menu a:not(.btn).active,
+.public-mobile-menu a:not(.btn):hover {
+  color: var(--color-primary);
 }

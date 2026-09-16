@@ -13,15 +13,15 @@ import {
   Bar,
 } from 'recharts';
 import { Card } from '../common/UI.js';
-const colors = [
-  '#7c9e60',
-  '#bfd39d',
-  '#dfca88',
-  '#8faeab',
-  '#b0a0c0',
-  '#d8a394',
-  '#c9d0c0',
-];
+const statusColors = {
+  Applied: 'var(--color-text-secondary)',
+  'Under Review': 'var(--color-accent)',
+  Shortlisted: 'var(--color-primary)',
+  'Interview Scheduled': 'var(--color-interview)',
+  Offered: 'var(--color-success)',
+  Rejected: 'var(--color-error)',
+  Withdrawn: '#a1a1aa',
+};
 export default function Analytics({
   applications,
   jobs,
@@ -76,23 +76,27 @@ export default function Analytics({
                 data={vacancyData}
                 margin={{ left: -20, right: 12, top: 10, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eaf0e2" />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  stroke="var(--color-border)"
+                />
                 <XAxis
                   dataKey="name"
-                  tick={{ fontSize: 9, fill: '#919d83' }}
+                  tick={{ fontSize: 9, fill: 'var(--color-text-secondary)' }}
                   axisLine={false}
                   tickLine={false}
                 />
                 <YAxis
                   allowDecimals={false}
-                  tick={{ fontSize: 10, fill: '#919d83' }}
+                  tick={{ fontSize: 10, fill: 'var(--color-text-secondary)' }}
                   axisLine={false}
                   tickLine={false}
                 />
                 <Tooltip />
                 <Bar
                   dataKey="applications"
-                  fill="#86a565"
+                  fill="var(--color-primary)"
                   radius={[5, 5, 0, 0]}
                   maxBarSize={45}
                 />
@@ -104,20 +108,32 @@ export default function Analytics({
               >
                 <defs>
                   <linearGradient id="activityFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#b5d293" stopOpacity={0.45} />
-                    <stop offset="100%" stopColor="#b5d293" stopOpacity={0.02} />
+                    <stop
+                      offset="0%"
+                      stopColor="var(--color-primary)"
+                      stopOpacity={0.45}
+                    />
+                    <stop
+                      offset="100%"
+                      stopColor="var(--color-primary)"
+                      stopOpacity={0.02}
+                    />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eaf0e2" />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  stroke="var(--color-border)"
+                />
                 <XAxis
                   dataKey="name"
-                  tick={{ fontSize: 9, fill: '#919d83' }}
+                  tick={{ fontSize: 9, fill: 'var(--color-text-secondary)' }}
                   axisLine={false}
                   tickLine={false}
                 />
                 <YAxis
                   allowDecimals={false}
-                  tick={{ fontSize: 10, fill: '#919d83' }}
+                  tick={{ fontSize: 10, fill: 'var(--color-text-secondary)' }}
                   axisLine={false}
                   tickLine={false}
                 />
@@ -125,7 +141,7 @@ export default function Analytics({
                 <Area
                   type="monotone"
                   dataKey="applications"
-                  stroke="#82a55e"
+                  stroke="var(--color-primary)"
                   strokeWidth={2.5}
                   fill="url(#activityFill)"
                 />
@@ -155,8 +171,11 @@ export default function Analytics({
                 paddingAngle={4}
                 stroke="none"
               >
-                {(statusData.length ? statusData : [{}]).map((s, i) => (
-                  <Cell key={s.name || 'empty'} fill={colors[i % colors.length]} />
+                {(statusData.length ? statusData : [{}]).map((s) => (
+                  <Cell
+                    key={s.name || 'empty'}
+                    fill={statusColors[s.name] || 'var(--color-secondary)'}
+                  />
                 ))}
               </Pie>
               <Tooltip />
@@ -164,9 +183,11 @@ export default function Analytics({
           </ResponsiveContainer>
         </div>
         <div className="chart-legend">
-          {statusData.map((s, i) => (
+          {statusData.map((s) => (
             <span key={s.name}>
-              <i style={{ background: colors[i] }} />
+              <i
+                style={{ background: statusColors[s.name] || 'var(--color-secondary)' }}
+              />
               {s.name} ({s.value})
             </span>
           ))}

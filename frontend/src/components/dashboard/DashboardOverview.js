@@ -268,7 +268,7 @@ export default function DashboardOverview({ provider = false }) {
                 .slice(0, 3)
                 .map((j) => (
                   <Link key={j.id} to={`/jobs/${j.id}`} className="list-item">
-                    <Clock3 size={18} color="#9caa74" />
+                    <Clock3 size={18} color="var(--color-accent)" />
                     <div>
                       <h3>{j.title}</h3>
                       <p>Apply by {formatDate(j.deadline)}</p>
