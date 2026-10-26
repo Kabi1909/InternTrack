@@ -60,6 +60,7 @@ export default function JobCard({ job, compact = false }) {
             {formatDate(job.deadline).replace(', ' + new Date().getFullYear(), '')}
           </span>
           <Link to={`/jobs/${job.id}`} aria-label={`View ${job.title}`}>
+            View details
             <ArrowUpRight size={20} />
           </Link>
         </div>

@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { ArrowUpRight, Menu, Route, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.js';
 import { ButtonLink } from '../components/common/UI.js';
+import ThemeToggle from '../components/common/ThemeToggle.js';
 export function Logo() {
   return (
     <Link to="/" className="logo" aria-label="InternTrack home">
@@ -31,6 +32,7 @@ export default function PublicLayout() {
             <NavLink to="/jobs">Browse jobs</NavLink>
             <NavLink to="/about">About us</NavLink>
           </nav>
+          <ThemeToggle />
           <div className="nav-actions">
             {user ? (
               <ButtonLink to={`/${user.role}/dashboard`}>

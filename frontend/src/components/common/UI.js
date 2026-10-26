@@ -113,7 +113,7 @@ export function CompanyLogo({ company, size = '' }) {
   return (
     <span
       className={`company-logo ${size}`}
-      style={{ background: company?.color || 'var(--color-primary)' }}
+      style={{ background: company?.color || 'var(--color-brand-solid)' }}
       aria-label={`${company?.name || 'Company'} logo`}
     >
       {company?.mark || company?.name?.[0] || 'I'}

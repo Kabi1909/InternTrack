@@ -22,6 +22,7 @@ import { useData } from '../context/DataContext.js';
 import { Avatar, Dropdown } from '../components/common/UI.js';
 import { Logo } from './PublicLayout.js';
 import { useMediaQuery } from '../hooks/useMediaQuery.js';
+import ThemeToggle from '../components/common/ThemeToggle.js';
 const studentLinks = [
   ['Dashboard', 'dashboard', LayoutDashboard],
   ['Browse Jobs', '/jobs', BriefcaseBusiness],
@@ -181,6 +182,7 @@ export default function DashboardLayout({ role }) {
             </div>
           </div>
           <div className="topbar-actions">
+            <ThemeToggle />
             <button className="workspace-indicator" onClick={data.reload}>
               Refresh workspace
             </button>

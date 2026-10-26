@@ -7,6 +7,7 @@ import ProtectedRoute from './components/common/ProtectedRoute.js';
 import ErrorBoundary from './components/common/ErrorBoundary.js';
 import { ButtonLink, EmptyState, LoadingSpinner } from './components/common/UI.js';
 import Home from './pages/public/Home.js';
+import { usePageMotion } from './hooks/usePageMotion.js';
 const About = lazy(() => import('./pages/public/About.js'));
 const AuthPage = lazy(() => import('./pages/public/AuthPage.js'));
 const BrowseJobs = lazy(() => import('./pages/public/BrowseJobs.js'));
@@ -27,6 +28,7 @@ const Applicants = lazy(() => import('./pages/provider/Applicants.js'));
 const CandidateDetails = lazy(() => import('./pages/provider/CandidateDetails.js'));
 function RouteEffects() {
   const { pathname } = useLocation();
+  usePageMotion(pathname);
   useEffect(() => {
     window.scrollTo(0, 0);
     const segment = pathname.split('/').filter(Boolean).pop();
